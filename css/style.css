@@ -1,6 +1,11 @@
 body {
-  margin: 0;
-  font-size: 16px;
+  margin: 0 auto; /* 가운데 정렬 */
+  padding: 0 16px; /* 모바일에서도 좌우 여백 확보 */
+  max-width: 760px; /* 본문 폭 제한 (가독성 좋은 폭) */
+  font-size: 16px; /* 기본 폰트 크기 */
+  line-height: 1.6; /* 줄 간격 */
+  color: #111; /* 글자색 */
+  background: #fff; /* 배경 */
 }
 
 img {
