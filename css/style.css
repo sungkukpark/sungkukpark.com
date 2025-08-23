@@ -8,8 +8,36 @@ body {
   background: #fff; /* 배경 */
 }
 
-img {
+.profile {
+  text-align: center;
+  margin: 16px 0;
+}
+
+.profile-link {
+  display: inline-block;
+  text-decoration: none;
+  color: #0a66c2;
+  font-weight: bold;
+}
+
+.profile-link img {
   border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-link:hover img {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.profile-link .linkedin {
+  margin-top: 8px;
+}
+
+.profile-link:hover .linkedin {
+  text-decoration: underline;
 }
 
 .lang-switch {
