@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  font-size: 16px;
+}
+
 img {
   border-radius: 50%;
 }
@@ -10,15 +15,10 @@ img {
 
 .lang-switch a {
   padding: 6px 12px;
-  background-color: #5c009f; /* 브랜드 컬러 */
+  background-color: #5c009f;
   color: white;
   text-decoration: none;
   border-radius: 6px;
   font-size: 14px;
   font-weight: bold;
-  transition: background 0.3s;
-}
-
-.lang-switch a:hover {
-  background-color: #7a33c9;
 }
