@@ -37,3 +37,26 @@ img {
   border-top: 2px solid #5c009f; /* 브랜드 컬러로 위쪽 구분선 */
   background: #fafafa; /* 은은한 배경 */
 }
+.education-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.education-list li {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddd;
+}
+.education-list h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #111;
+}
+.education-list p {
+  margin: 4px 0;
+  color: #444;
+}
+.education-list time {
+  font-size: 0.9rem;
+  color: #666;
+}
