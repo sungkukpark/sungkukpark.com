@@ -8,6 +8,15 @@ body {
   background: #fff; /* 배경 */
 }
 
+.logo {
+  text-align: center;
+}
+
+.logo:hover img {
+  transform: scale(1.02);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .profile {
   text-align: center;
   margin: 16px 0;
@@ -24,11 +33,11 @@ body {
   border-radius: 50%;
   display: block;
   margin: 0 auto;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
 }
 
 .profile-link:hover img {
-  transform: scale(1.03);
+  transform: scale(1.02);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
