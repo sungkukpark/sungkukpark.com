@@ -12,6 +12,16 @@ body {
   text-align: center;
 }
 
+.logo img {
+  width: 512px;
+}
+
+@media screen and (max-width: 768px) {
+  .logo img {
+    width: 256px; /* Mobile device's screen */
+  }
+}
+
 .logo:hover img {
   transform: scale(1.02);
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
