@@ -130,14 +130,14 @@ ul {
   margin-top: 8px;
 }
 
-/* 푸터 */
 .site-footer {
-  max-width: 980px;
-  margin: 40px auto 20px;
-  padding: 8px 16px;
-  text-align: center;
-  font-size: 13px;
-  color: #5f6b7a;
+  margin-top: 80px; /* 본문과 간격 */
+  padding: 24px 16px; /* 안쪽 여백 */
+  text-align: center; /* 가운데 정렬 */
+  font-size: 0.85rem;
+  color: #666;
+  border-top: 2px solid #5c009f; /* 브랜드 컬러로 위쪽 구분선 */
+  background: #fafafa; /* 은은한 배경 */
 }
 
 .lang-switch {

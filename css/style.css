@@ -1,11 +1,28 @@
 body {
   margin: 0 auto; /* 가운데 정렬 */
-  padding: 0 16px 80px; /* 모바일에서도 좌우 여백 확보 */
-  max-width: 760px; /* 본문 폭 제한 (가독성 좋은 폭) */
+  padding: 0;
   font-size: 16px; /* 기본 폰트 크기 */
   line-height: 1.6; /* 줄 간격 */
   color: #111; /* 글자색 */
   background: #fff; /* 배경 */
+}
+
+/* 본문 래퍼만 폭 제한 */
+.page {
+  margin: 0 auto; /* 가운데 정렬 */
+  padding: 0 16px 80px; /* 좌우 여백 + 아래 여백 */
+  max-width: 760px; /* 가독성 좋은 폭 */
+}
+
+/* 푸터는 화면 전체 */
+.site-footer {
+  margin-top: 80px;
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  border-top: 2px solid #5c009f;
+  background: #fafafa;
 }
 
 .logo {
@@ -75,34 +92,29 @@ body {
   font-weight: bold;
 }
 
-.site-footer {
-  margin-top: 80px; /* 본문과 간격 */
-  padding: 24px 16px; /* 안쪽 여백 */
-  text-align: center; /* 가운데 정렬 */
-  font-size: 0.85rem;
-  color: #666;
-  border-top: 2px solid #5c009f; /* 브랜드 컬러로 위쪽 구분선 */
-  background: #fafafa; /* 은은한 배경 */
-}
 .education-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .education-list li {
   margin-bottom: 16px;
   padding-bottom: 12px;
   border-bottom: 1px solid #ddd;
 }
+
 .education-list h3 {
   margin: 0;
   font-size: 1.1rem;
   color: #111;
 }
+
 .education-list p {
   margin: 4px 0;
   color: #444;
 }
+
 .education-list time {
   font-size: 0.9rem;
   color: #666;
