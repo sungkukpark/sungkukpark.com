@@ -4,129 +4,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sungkuk Park's VFX Optics</title>
-    <!-- Favicon -->
+    <title>Unreal Lighting Camp – Technical Lighting in Unreal 5.6</title>
     <link rel="icon" sizes="32x32" href="img/favicon-32.png?v=2" type="image/png">
     <link rel="icon" sizes="192x192" href="img/favicon-192.png?v=2" type="image/png">
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png?v=2">
-    <!-- English fonts -->
     <link rel="stylesheet" href="css/fonts-en.css">
-    <!-- Common style -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <header>
-        <!-- Language Switch -->
         <div class="lang-switch">
             <a href="index-ko.html">한국어</a>
-            <a href="../../index-ko.html" class="about-btn">About</a>
+            <a href="../../index.html" class="about-btn">About</a>
         </div>
         <div class="wrap">
             <div class="title">
-                <h1>Blueprint Series for Lighting Artists</h1>
+                <h1>Technical Lighting in Unreal 5.6</h1>
             </div>
             <nav aria-label="section navigation">
-                <a href="#ep1">Fundamentals</a>
-                <a href="#ep2">Cinematic & Sky Dome</a>
-                <a href="#ep3">Metahuman Cinematics</a>
+                <a href="#ep1">Essentials</a>
+                <a href="#ep2">Environments</a>
+                <a href="#ep3">Characters – Production Delivery</a>
             </nav>
         </div>
     </header>
+
     <main>
         <!-- EPISODE 1 -->
         <section id="ep1">
-            <h2>Unreal Engine 5.6 Blueprint Fundamentals – Intro for Lighting Artists</h2>
+            <h2>Technical Lighting in Unreal 5.6: Essentials — 3 Point Setup & Light Fixtures</h2>
             <div class="poster">
-                <img src="img/ep1-ue5-blueprint-foundations.png"
-                    alt="Poster - Blueprint Fundamentals for Lighting Artists (UE 5.6)" width="512">
-            </div>
-            <div class="grid">
-                <div>
-                    <h3>Key Learnings</h3>
-                    <ul>
-                        <li>Blueprint basics (variables, events, functions)</li>
-                        <li>Light control (On/Off, Intensity, Color)</li>
-                        <li><strong>Light Fixture Blueprint</strong>
-                            <ul>
-                                <li>Combining Point/Spot Light with Mesh</li>
-                                <li>Exposed variables to adjust brightness and color</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>Outcome</h3>
-                        <p>A Light Fixture in a room controlled by a switch</p>
-                    </div>
-                    <p class="meta">Blueprint basics, dynamic light control, Light Fixture</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- EPISODE 2 -->
-        <section id="ep2">
-            <h2>Unreal Engine 5.6 Blueprint Applied – Cinematic Lighting & Sky Dome</h2>
-            <div class="poster">
-                <img src="img/ep2-ue5-blueprint-cinematic.png"
-                    alt="Poster - Cinematic Lighting with Blueprints & Sky Dome (UE 5.6)" width="512">
-            </div>
-            <div class="grid">
-                <div>
-                    <h3>Key Learnings</h3>
-                    <ul>
-                        <li>Sequencer + Blueprint integration (event-driven cutscenes)</li>
-                        <li>Timeline-driven Day/Night transition</li>
-                        <li><strong>Sky Dome Blueprint</strong>
-                            <ul>
-                                <li>Animating sun/moon altitude and linking intensity/color</li>
-                                <li>Controlling light & post-process parameters</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>Outcome</h3>
-                        <p>A cinematic scene where Sky Dome and lights sync in a Day/Night cycle</p>
-                    </div>
-                    <p class="meta">Sequencer, Sky Dome, cinematic lighting</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- EPISODE 3 -->
-        <section id="ep3">
-            <h2>Unreal Engine 5.6 Blueprint Advanced – Metahuman Cinematics & Production Workflow</h2>
-            <div class="poster">
-                <img src="img/ep3-ue5-blueprint-advanced-metahuman.png"
-                    alt="Poster - Advanced Blueprint Workflows for Lighting Artists: Metahuman Cinematics (UE 5.6)"
+                <img src="img/ep1-ue5-blueprint-foundations.png" alt="Essentials – 3 Point Setup & Fixtures"
                     width="512">
             </div>
             <div class="grid">
                 <div>
                     <h3>Key Learnings</h3>
                     <ul>
-                        <li>Using Construction Script to mass-place and manage Light Fixtures</li>
-                        <li>Optimization: LOD, Culling, minimizing Event Tick</li>
-                        <li><strong>Metahuman + Sequencer: sync lighting with performance timing</strong></li>
-                        <li>Material & Post-process parameter synchronization</li>
+                        <li>Unreal light types & setup:
+                            <ul>
+                                <li>Point</li>
+                                <li>Spot</li>
+                                <li>Rect</li>
+                                <li>Directional</li>
+                            </ul>
+                        </li>
+                        <li>3 Point Lighting setup and control:
+                            <ul>
+                                <li>Key Light</li>
+                                <li>Rim Light</li>
+                                <li>Fill Light</li>
+                            </ul>
+                        </li>
+                        <li>Blueprint basics:
+                            <ul>
+                                <li>Variables</li>
+                                <li>Events</li>
+                                <li>Functions</li>
+                            </ul>
+                        </li>
+                        <li>Light Fixture Blueprint:
+                            <ul>
+                                <li>On/Off switch control</li>
+                                <li>Intensity & Color parameter adjustment</li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <div>
                     <div class="result">
-                        <h3>Outcome</h3>
-                        <p>A production-ready cinematic: Metahuman acting synchronized with Sky Dome, Light Fixtures,
-                            and lighting effects</p>
+                        <h3>Outcomes</h3>
+                        <ul>
+                            <li><strong>3 Point Lighting</strong> applied to a character/object basic scene</li>
+                            <li><strong>Light Fixture</strong> blueprint actor (switch control, intensity/color
+                                adjustment)</li>
+                        </ul>
                     </div>
-                    <p class="meta">Metahuman, optimization, advanced workflow</p>
+                    <p class="meta">Keywords: Light Types, 3 Point Lighting, Light Fixture, Blueprint Basics</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EPISODE 2 -->
+        <section id="ep2">
+            <h2>Technical Lighting in Unreal 5.6: Environments — Sky Dome & Sequencer</h2>
+            <div class="poster">
+                <img src="img/ep2-ue5-blueprint-cinematic.png" alt="Environments – Sky Dome & Sequencer" width="512">
+            </div>
+            <div class="grid">
+                <div>
+                    <h3>Key Learnings</h3>
+                    <ul>
+                        <li>Sky Dome & Sky Atmosphere setup</li>
+                        <li>Sequencer for syncing camera & lights (event-driven cutscenes)</li>
+                        <li>Blueprint Timeline node for <strong>Day/Night transitions</strong></li>
+                        <li>Volumetric Fog, Post Process basics</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="result">
+                        <h3>Outcomes</h3>
+                        <ul>
+                            <li><strong>Day/Night</strong> cinematic scene with Sky Dome and synced lighting</li>
+                            <li><strong>Sequencer cutscene</strong> (camera cuts & light fades triggered by events)</li>
+                        </ul>
+                    </div>
+                    <p class="meta">Keywords: Sky Dome, Sequencer, Timeline, Fog, Post Process</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EPISODE 3 -->
+        <section id="ep3">
+            <h2>Technical Lighting in Unreal 5.6: Characters — Metahuman & Production Delivery</h2>
+            <div class="poster">
+                <img src="img/ep3-ue5-blueprint-advanced-metahuman.png"
+                    alt="Characters – Metahuman & Production Delivery" width="512">
+            </div>
+            <div class="grid">
+                <div>
+                    <h3>Key Learnings</h3>
+                    <ul>
+                        <li>Metahuman lighting:
+                            <ul>
+                                <li>Skin Shading</li>
+                                <li><strong>Eye Specular / Catchlight</strong></li>
+                                <li>Enhanced Key / Rim / Fill setup for characters</li>
+                            </ul>
+                        </li>
+                        <li><strong>Metahuman + Sequencer direction</strong>:
+                            <ul>
+                                <li>Lighting events synced with acting performance</li>
+                                <li>Cutscene-based cinematic sequence</li>
+                            </ul>
+                        </li>
+                        <li>Construction Script for large-scale Light Fixture placement/management</li>
+                        <li>Material & Post Process parameter control</li>
+                        <li>Large-scene optimization:
+                            <ul>
+                                <li>Light Channels</li>
+                                <li>LOD · Culling</li>
+                                <li>Minimizing Event Tick</li>
+                            </ul>
+                        </li>
+                        <li><strong>Project Packaging</strong>:
+                            <ul>
+                                <li>Unreal build & packaging settings</li>
+                                <li>Cinematic output via Movie Render Queue</li>
+                                <li>Optimized workflow for production-ready delivery</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="result">
+                        <h3>Outcomes</h3>
+                        <ul>
+                            <li><strong>Metahuman cinematic</strong>: Character acting + Eye Specular / Catchlight +
+                                synced
+                                lighting/environment</li>
+                            <li><strong>Production Delivery</strong> outputs: Unreal packaged build & cinematic video
+                            </li>
+                        </ul>
+                    </div>
+                    <p class="meta">Keywords: Metahuman, Sequencer, Packaging, Production Delivery, Optimization, Post
+                        FX</p>
                 </div>
             </div>
         </section>
     </main>
+
     <footer class="site-footer">
-        <p>© 2025 Sungkuk Park · VFX Optics</p>
+        <p>© 2025 Sungkuk Park · VFX Optics · Unreal Lighting Camp</p>
     </footer>
 </body>
 

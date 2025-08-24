@@ -1,132 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sungkuk Park's VFX Optics</title>
-    <!-- Favicon -->
+    <title>Unreal Lighting Camp – Technical Lighting in Unreal 5.6</title>
     <link rel="icon" sizes="32x32" href="img/favicon-32.png?v=2" type="image/png">
     <link rel="icon" sizes="192x192" href="img/favicon-192.png?v=2" type="image/png">
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png?v=2">
-    <!-- <link rel="stylesheet" href="css/destyle.css"> -->
-    <!-- English fonts -->
     <link rel="stylesheet" href="css/fonts-en.css">
-    <!-- Common style -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <header>
-        <!-- 언어 선택 버튼 -->
         <div class="lang-switch">
             <a href="index.html">English</a>
             <a href="../../index.html" class="about-btn">About</a>
         </div>
         <div class="wrap">
             <div class="title">
-                <h1>라이팅 아티스트를 위한 블루프린트 시리즈</h1>
+                <h1>언리얼 5.6 테크니컬 라이팅</h1>
             </div>
             <nav aria-label="섹션 내비게이션">
-                <a href="#ep1">기초 (Fundamentals)</a>
-                <a href="#ep2">응용 (Cinematic & Sky Dome)</a>
-                <a href="#ep3">심화 (Metahuman Cinematics)</a>
+                <a href="#ep1">Essentials</a>
+                <a href="#ep2">Environments</a>
+                <a href="#ep3">Characters – Production Delivery</a>
             </nav>
         </div>
     </header>
+
     <main>
         <!-- EPISODE 1 -->
         <section id="ep1">
-            <h2>언리얼 5.6 블루프린트 기초 – 라이팅 아티스트를 위한 입문</h2>
+            <h2>언리얼 5.6 테크니컬 라이팅 : 기초 — 3점 조명 & 라이트 픽스처(Light Fixture)</h2>
             <div class="poster">
-                <img src="img/ep1-ue5-blueprint-foundations.png"
-                    alt="Poster - Blueprint Fundamentals for Lighting Artists (UE 5.6)" width="512">
-            </div>
-            <div class="grid">
-                <div>
-                    <h3>핵심 학습</h3>
-                    <ul>
-                        <li>블루프린트 기초 문법 (변수, 이벤트, 함수)</li>
-                        <li>라이트 제어 (On/Off, Intensity, Color)</li>
-                        <li><strong>라이트 픽스처(Light Fixture) 블루프린트 제작</strong>
-                            <ul>
-                                <li>포인트/스팟 라이트 + 메시(Mesh) 조합</li>
-                                <li>노출 변수로 밝기/색상 제어 가능</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>결과물</h3>
-                        <p>스위치로 제어 가능한 방 안의 라이트 픽스처</p>
-                    </div>
-                    <p class="meta">블루프린트 기본기, 라이트의 동적인 제어, 라이팅 픽스처</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- EPISODE 2 -->
-        <section id="ep2">
-            <h2>언리얼 5.6 블루프린트 응용 – 시네마틱 라이팅과 스카이 돔</h2>
-            <div class="poster">
-                <img src="img/ep2-ue5-blueprint-cinematic.png"
-                    alt="Poster - Cinematic Lighting with Blueprints & Sky Dome (UE 5.6)" width="512">
-            </div>
-            <div class="grid">
-                <div>
-                    <h3>핵심 학습</h3>
-                    <ul>
-                        <li>시퀀서 + 블루프린트 연동 (이벤트 기반 컷신)</li>
-                        <li>타임라인으로 낮/밤 전환 구현</li>
-                        <li><strong>스카이 돔(Sky Dome) 블루프린트 제작</strong>
-                            <ul>
-                                <li>태양/달 고도 변경 및 색/강도 연동</li>
-                                <li>라이트/포스트프로세스 파라미터 제어</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>결과물</h3>
-                        <p>스카이 돔과 라이트가 연동되는 낮/밤이 전환되는 시네마틱 씬</p>
-                    </div>
-                    <p class="meta">시퀀서, 스카이 돔, 시네마틱 라이팅</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- EPISODE 3 -->
-        <section id="ep3">
-            <h2>언리얼 5.6 블루프린트 심화 – 메타휴먼 시네마틱과 프로덕션 워크플로우</h2>
-            <div class="poster">
-                <img src="img/ep3-ue5-blueprint-advanced-metahuman.png"
-                    alt="Poster - Advanced Blueprint Workflows for Lighting Artists: Metahuman Cinematics (UE 5.6)"
+                <img src="img/ep1-ue5-blueprint-foundations.png" alt="Essentials – 3 Point Setup & Fixtures"
                     width="512">
             </div>
             <div class="grid">
                 <div>
                     <h3>핵심 학습</h3>
                     <ul>
-                        <li>컨스트럭션 스크립트(Construction Script)로 라이트 픽스처 대량 배치/관리</li>
-                        <li>최적화: LOD, Culling, Event Tick 최소화</li>
-                        <li><strong>메타휴먼 + 시퀀서: 연기 타이밍에 맞춘 라이트 연출</strong></li>
-                        <li>머티리얼/포스트프로세스 파라미터 동기화</li>
+                        <li>언리얼 라이트의 타입(Type)과 세팅:
+                            <ul>
+                                <li>포인트(Point)</li>
+                                <li>스팟(Spot)</li>
+                                <li>렉트(Rect)</li>
+                                <li>디렉셔널(Directional)</li>
+                            </ul>
+                        </li>
+                        <li>3점 조명
+                            <ul>
+                                <li>키 라이트(Key Light)</li>
+                                <li>림 라이트(Rim Light)</li>
+                                <li>필 라이트(Fill Light)</li>
+                            </ul>
+                            라이트 설치 및 제어
+                        </li>
+                        <li>블루프린트 기본
+                            <ul>
+                                <li>변수(Variable)</li>
+                                <li>이벤트(Event)</li>
+                                <li>함수(Function)</li>
+                            </ul>
+                        </li>
+                        <li>라이트 픽스처(Light Fixture) 블루프린트 제작
+                            <ul>
+                                <li>On/Off 스위치 제어</li>
+                                <li>Intensity · Color 파라미터 조정</li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <div>
                     <div class="result">
                         <h3>결과물</h3>
-                        <p>메타휴먼 연기와 스카이 돔/라이트 픽스처/라이트 연출이 동기화된 프로덕션급 시네마틱</p>
+                        <ul>
+                            <li><strong>3점 조명</strong>이 적용된 캐릭터 · 오브젝트 기초 씬</li>
+                            <li><strong>라이트 픽스처(Light Fixture)</strong> 블루프린트 액터 (스위치 제어, 강도 · 색상 조절 가능)</li>
+                        </ul>
                     </div>
-                    <p class="meta">메타휴먼, 최적화, 고급 워크플로우</p>
+                    <p class="meta">키워드: 라이트 타입, 3점 조명, 라이트 픽스처, 블루프린트 기초</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EPISODE 2 -->
+        <section id="ep2">
+            <h2>언리얼 5.6 테크니컬 라이팅 : 환경 — 스카이 돔(Sky Dome) & 시퀀서</h2>
+            <div class="poster">
+                <img src="img/ep2-ue5-blueprint-cinematic.png" alt="Environments – Sky Dome & Sequencer" width="512">
+            </div>
+            <div class="grid">
+                <div>
+                    <h3>핵심 학습</h3>
+                    <ul>
+                        <li>스카이 돔(Sky Dome) & <span lang="en">스카이 애트모스피어(Sky Atmosphere)</span> 구축</li>
+                        <li>시퀀서(Sequencer)로 카메라 · 라이트 동기화 (이벤트 기반 컷신)</li>
+                        <li>블루프린트 타임라인(Timeline) 노드로 <strong>밤/낮 전환</strong></li>
+                        <li>볼류메트릭 포그(Volumetric Fog), 포스트 프로세스(Post Process) 기초</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="result">
+                        <h3>결과물</h3>
+                        <ul>
+                            <li><strong>밤/낮(Day/Night)</strong> 전환과 라이트가 동기화된 스카이 돔(Sky Dome)을 활용한 시네마틱 씬</li>
+                            <li><strong>시퀀서(Sequencer) 컷씬</strong> (카메라 컷 · 라이트 페이드 이벤트 연동)</li>
+                        </ul>
+                    </div>
+                    <p class="meta">키워드: 스카이 돔, 시퀀서, 타임라인, 포그(Fog), 포스트 프로세스</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EPISODE 3 -->
+        <section id="ep3">
+            <h2>언리얼 5.6 테크니컬 라이팅 : 캐릭터 — 메타휴먼 & 패키징(Packaging)</h2>
+            <div class="poster">
+                <img src="img/ep3-ue5-blueprint-advanced-metahuman.png"
+                    alt="Characters – Metahuman & Production Delivery" width="512">
+            </div>
+            <div class="grid">
+                <div>
+                    <h3>핵심 학습</h3>
+                    <ul>
+                        <li>메타휴먼 라이팅
+                            <ul>
+                                <li>스킨 셰이딩(Skin Shading)</li>
+                                <li><strong>아이 스페큘러(Eye Specular) / 캐치라이트(Catchlight)</strong></li>
+                                <li>3점 조명 강화 및 캐릭터 최적 세팅</li>
+                            </ul>
+                        </li>
+                        <li><strong>메타휴먼 + 시퀀서 연출</strong>
+                            <ul>
+                                <li>연기 타이밍에 맞춘 라이트 이벤트</li>
+                                <li>컷신 기반 시네마틱 시퀀스 제작</li>
+                            </ul>
+                        </li>
+                        <li>컨스트럭션 스크립트(Construction Script)로 라이트 픽스처(Light Fixture) 대규모 배치/관리</li>
+                        <li>머티리얼 & 포스트프로세스 파라미터 제어</li>
+                        <li>대규모 씬 최적화
+                            <ul>
+                                <li>라이트 채널(Light Channel) 활용</li>
+                                <li>LOD · 컬링(Culling)</li>
+                                <li>이벤트 틱(Event Tick) 최소화</li>
+                            </ul>
+                        </li>
+                        <li><strong>프로젝트 패키징(Packaging)</strong>
+                            <ul>
+                                <li>언리얼 빌드 및 패키징(Packaging) 설정</li>
+                                <li>무비 렌더 큐(Movie Render Queue)로 시네마틱 출력</li>
+                                <li>프로덕션 납품(Production Delivery)용 최적화 워크플로우</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="result">
+                        <h3>결과물</h3>
+                        <ul>
+                            <li><strong>메타휴먼 시네마틱</strong>: 캐릭터 연기(Acting) + 아이 스페큘러(Eye Specular)/캐치라이트(Catchlight) +
+                                라이트/환경 동기화
+                            </li>
+                            <li><strong>프로덕션 납품(Production Delivery)</strong> 산출물: 언리얼 빌드 패키지 & 시네마틱 영상</li>
+                        </ul>
+                    </div>
+                    <p class="meta">키워드: 메타휴먼, 시퀀서, 패키징, 최적화, 포스트 FX</p>
                 </div>
             </div>
         </section>
     </main>
+
     <footer class="site-footer">
-        <p>© 2025 Sungkuk Park · VFX Optics</p>
+        <p>© 2025 Sungkuk Park · VFX Optics · Unreal Lighting Camp</p>
     </footer>
 </body>
 
