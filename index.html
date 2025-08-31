@@ -41,6 +41,17 @@
 
       gtag("config", "G-KBBCPDSF0P");
     </script>
+    <script>
+      function cycleLang() {
+        const currentLang = 'en';
+        const langCycle = {
+          'en': 'index-ko.html',
+          'ko': 'index-jp.html', 
+          'jp': 'index.html'
+        };
+        window.location.href = langCycle[currentLang];
+      }
+    </script>
   </head>
 
   <body>
@@ -54,7 +65,7 @@
           </div>
           <!-- 언어 선택 버튼 -->
           <div class="lang-switch">
-            <a href="index-ko.html">한국어</a>
+            <a href="#" onclick="cycleLang(); return false;">한국어</a>
           </div>
         </div>
         <h1>About Me</h1>
