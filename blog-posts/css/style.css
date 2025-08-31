@@ -62,3 +62,36 @@
 .about-btn a:hover {
   background-color: #2980b9; /* 호버 시에도 같은 색상 유지 */
 }
+
+body {
+  margin: 0 auto; /* 가운데 정렬 */
+  padding: 0;
+  font-size: 16px; /* 기본 폰트 크기 */
+  line-height: 1.6; /* 줄 간격 */
+  color: #111; /* 글자색 */
+  background: #fff; /* 배경 */
+}
+
+/* 본문 래퍼만 폭 제한 */
+.page {
+  margin: 0 auto; /* 가운데 정렬 */
+  padding: 0 16px 80px; /* 좌우 여백 + 아래 여백 */
+  max-width: 760px; /* 가독성 좋은 폭 */
+}
+
+/* 푸터는 화면 전체 */
+.site-footer {
+  margin-top: 80px;
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  border-top: 2px solid #5c009f;
+  background: #fafafa;
+}
+
+@media screen and (max-width: 768px) {
+  .logo img {
+    width: 256px; /* Mobile device's screen */
+  }
+}

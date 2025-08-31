@@ -25,18 +25,18 @@ body {
   background: #fafafa;
 }
 
+@media screen and (max-width: 768px) {
+  .logo img {
+    width: 256px; /* Mobile device's screen */
+  }
+}
+
 .logo {
   text-align: center;
 }
 
 .logo img {
   width: 512px;
-}
-
-@media screen and (max-width: 768px) {
-  .logo img {
-    width: 256px; /* Mobile device's screen */
-  }
 }
 
 .logo:hover img {
