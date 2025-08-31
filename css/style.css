@@ -29,6 +29,9 @@ body {
   .logo img {
     width: 256px; /* Mobile device's screen */
   }
+  .profile-link img {
+    width: 256px; /* Mobile device's screen */
+  }
 }
 
 .logo {
