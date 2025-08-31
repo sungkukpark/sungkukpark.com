@@ -28,7 +28,24 @@
 
 .lang-switch a {
   padding: 8px 16px;
-  background-color: #5c009f;
+  background-color: #6c757d; /* 비활성화된 회색 */
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  opacity: 0.5; /* 흐리게 표시 */
+  cursor: not-allowed; /* 금지 커서 */
+}
+
+.lang-switch a:hover {
+  background-color: #6c757d; /* 호버 시에도 같은 색상 유지 */
+}
+
+.about-btn a {
+  padding: 8px 16px;
+  background-color: #3498db; /* 활성화된 파란색 */
   color: white;
   text-decoration: none;
   border-radius: 6px;
@@ -37,14 +54,11 @@
   transition: background-color 0.2s ease;
 }
 
-.lang-switch a:hover {
-  background-color: #4a0080;
+.about-btn a {
+  background-color: #3498db; /* 활성화된 파란색 */
+  pointer-events: auto; /* 클릭 활성화 */
 }
 
-.lang-switch .about-btn {
-  background-color: #3498db; /* 파란색 계열 */
-}
-
-.lang-switch .about-btn:hover {
-  background-color: #2980b9;
+.about-btn a:hover {
+  background-color: #2980b9; /* 호버 시에도 같은 색상 유지 */
 }
