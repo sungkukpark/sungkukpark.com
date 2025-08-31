@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ko" data-font-theme="modern-tech">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      [cpp] C++ 개발 시 확장 프로그램 추천 - Sungkuk Park's VFX Optics
+    </title>
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      sizes="32x32"
+      href="img/favicon-32.png?v=2"
+      type="image/png"
+    />
+    <link
+      rel="icon"
+      sizes="192x192"
+      href="img/favicon-192.png?v=2"
+      type="image/png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="img/apple-touch-icon.png?v=2"
+    />
+    <!-- Korean font -->
+    <link rel="stylesheet" href="css/fonts-ko.css" />
+    <!-- Common style -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-KBBCPDSF0P"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-KBBCPDSF0P");
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <!-- 버튼 컨테이너 -->
+      <div class="button-container">
+        <div class="about-btn">
+          <a href="../index-ko.html" class="about-btn">자기 소개</a>
+        </div>
+        <div class="blog-post-list-btn">
+          <a href="index.html">블로그 포스트</a>
+        </div>
+        <!-- 언어 선택 버튼 -->
+        <div class="lang-switch">
+          <a href="cpp-extensions-en.html">English</a>
+        </div>
+      </div>
+    </header>
+    <div class="page">
+      <main>
+        <h1>[cpp] C++ 개발 시 VSCode 확장 프로그램 추천</h1>
+        <span class="post-date">작성일자: 2025-08-31</span>
+
+        <article>
+          <p>
+            Visual Studio Code에서 C++ 개발을 위한 유용한 확장 프로그램들을
+            소개합니다.
+          </p>
+          <h2>C++ 필수 확장 프로그램</h2>
+          <h3>
+            1.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools-extension-pack"
+              target="_blank"
+              >C/C++ Extension Pack</a
+            >
+          </h3>
+          <p>
+            Microsoft에서 제공하는 공식 C++ 확장 프로그램 패키지입니다.
+            IntelliSense, 디버깅, 코드 브라우징 등 기본적인 C++ 개발 기능을
+            제공합니다.
+          </p>
+          <h3>
+            2.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd"
+              target="_blank"
+              >clangd</a
+            >
+          </h3>
+          <p>
+            clangd는 빠른 코드 완성, 디버깅, 코드 브라우징 등 기본적인 C++ 개발
+            기능을 제공합니다. clangd로 각종 라이브러리 코드의 경로를 찾아서
+            참조할 수 있습니다.
+          </p>
+          <p>
+            단, clangd를 사용하는 경우 기존의 C/C++ Extension Pack의
+            인텔리센스(IntelliSense) 엔진과 충돌돌 발생하기 이를 방지하기 위해
+            기존의 인텔리센스 엔진을 비활성화 해야 합니다. 따라서 다음과 같이
+            VSCode 설정을 변경하도록 합니다.<br />
+            <code
+              >"clangd.detectExtensionConflicts": false,
+              "C_Cpp.intelliSenseEngine": "disabled"
+            </code>
+          </p>
+          <h3>
+            3.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=vector-of-bool.cmake-tools"
+              target="_blank"
+              >CMake Tools</a
+            >
+          </h3>
+          <p>
+            CMake 프로젝트를 Visual Studio Code에서 쉽게 빌드하고 관리할 수 있게
+            해주는 확장 프로그램입니다.
+          </p>
+          <h3>
+            4.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=matepek.vscode-catch2-test-adapter"
+              target="_blank"
+              >CMake Language Support</a
+            >
+          </h3>
+          <p>
+            CMake Language Support는 C Make 파일을 쉽게 편집할 수 있게 해주는
+            확장 프로그램입니다.
+          </p>
+          <h2>C++ 추천 확장 프로그램</h2>
+          <h3>
+            5.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=davidbroetje.algorithm-mnemonics-vscode"
+              target="_blank"
+              >C++ Algorithm Mnemonics</a
+            >
+          </h3>
+          <p>
+            C++ Algorithm Mnemonics는 C++ 알고리즘을 쉽게 편집할 수 있게 해주는
+            확장 프로그램입니다.
+          </p>
+          <h3>
+            6.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=matepek.vscode-catch2-test-adapter"
+              target="_blank"
+              >C++ TestMate</a
+            >
+          </h3>
+          <p>
+            C++ TestMate는 C++ 테스트를 쉽게 편집할 수 있게 해주는 확장
+            프로그램입니다.
+          </p>
+          <h2>Git 형상 관리 확장 프로그램</h2>
+          <h3>
+            7.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github"
+              target="_blank"
+              >GitHub Pull Requests and Issues</a
+            >
+          </h3>
+          <p>
+            GitHub Pull Requests and Issues는 GitHub 프로젝트를 쉽게 편집할 수
+            있게 해주는 확장 프로그램입니다.
+          </p>
+          <h3>
+            8.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=codezombiech.gitignore"
+              target="_blank"
+              >gitignore</a
+            >
+          </h3>
+          <p>
+            gitignore는 gitignore 파일을 쉽게 편집할 수 있게 해주는 확장
+            프로그램입니다.
+          </p>
+          <p>
+            GitHub Pull Requests and Issues는 GitHub 프로젝트를 쉽게 편집할 수
+            있게 해주는 확장 프로그램입니다.
+          </p>
+          <h3>
+            9.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens"
+              target="_blank"
+              >GitLens</a
+            >
+          </h3>
+          <p>
+            Git 히스토리와 blame 정보를 쉽게 확인할 수 있어 협업 개발에 매우
+            유용합니다.
+          </p>
+          <h2>코드 확인 확장 프로그램</h2>
+          <h3>
+            10.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker"
+              target="_blank"
+              >Code Spell Checker</a
+            >
+          </h3>
+          <p>
+            Code Spell Checker는 코드 철자 오류를 쉽게 확인할 수 있어 개발자에게
+            유용합니다.
+          </p>
+          <h3>
+            11.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=naumovs.color-highlight"
+              target="_blank"
+              >Color Highlight</a
+            >
+          </h3>
+          <p>
+            Color Highlight는 코드 색상을 쉽게 확인할 수 있어 개발자에게
+            유용합니다.
+          </p>
+          <h3>
+            12.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=kamikillerto.vscode-colorize"
+              target="_blank"
+              >colorize</a
+            >
+          </h3>
+          <p>
+            colorize는 코드 색상을 쉽게 확인할 수 있어 개발자에게 유용합니다.
+          </p>
+          <h3>
+            13.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=msfukui.eof-mark"
+              target="_blank"
+              >EOF Mark</a
+            >
+          </h3>
+          <p>
+            EOF Mark는 EOF 표시를 쉽게 확인할 수 있어 개발자에게 유용합니다.
+          </p>
+          <h3>
+            14.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv"
+              target="_blank"
+              >Rainbow CSV</a
+            >
+          </h3>
+          <p>
+            Rainbow CSV는 CSV 파일을 쉽게 확인할 수 있어 개발자에게 유용합니다.
+          </p>
+          <h3>
+            15.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=shardulm94.trailing-spaces"
+              target="_blank"
+              >Trailing Spaces</a
+            >
+          </h3>
+          <p>
+            Trailing Spaces는 코드 라인에 트레일링 스페이스를 쉽게 확인할 수
+            있어 개발자에게 유용합니다.
+          </p>
+          <h2>주석 관리 도구</h2>
+          <h3>
+            16.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=cschlosser.doxdocgen"
+              target="_blank"
+              >Doxygen Documentation Generator</a
+            >
+          </h3>
+          <p>
+            Doxygen Documentation Generator는 Doxygen 문서를 쉽게 생성할 수 있어
+            개발자에게 유용합니다.
+          </p>
+          <h3>
+            17.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments"
+              target="_blank"
+              >Better Comments</a
+            >
+          </h3>
+          <p>
+            Better Comments는 코드 주석을 쉽게 확인할 수 있어 개발자에게
+            유용합니다.
+          </p>
+          <h3>
+            18.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree"
+              target="_blank"
+              >Todo Tree</a
+            >
+          </h3>
+          <p>
+            Todo Tree는 Todo 목록을 쉽게 확인할 수 있어 개발자에게 유용합니다.
+          </p>
+          <h2>생산성 향상 도구</h2>
+          <h3>
+            19.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner"
+              target="_blank"
+              >Code Runner</a
+            >
+          </h3>
+          <p>
+            Code Runner는 간단한 C++ 코드를 빠르게 실행해볼 수 있는 확장
+            프로그램입니다.
+          </p>
+          <h3>
+            20.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens"
+              target="_blank"
+              >Error Lens</a
+            >
+          </h3>
+          <p>
+            Error Lens는 에러와 경고를 코드 라인에 직접 표시해주어 빠른 디버깅이
+            가능합니다.
+          </p>
+          <h3>
+            21.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks"
+              target="_blank"
+              >Bookmarks</a
+            >
+          </h3>
+          <p>
+            Bookmarks는 코드 라인에 북마크를 쉽게 확인할 수 있어 개발자에게
+            유용합니다.
+          </p>
+          <h3>
+            22.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=zh9528.file-size"
+              target="_blank"
+              >File Size</a
+            >
+          </h3>
+          <p>
+            File Size는 파일 크기를 쉽게 확인할 수 있어 개발자에게 유용합니다.
+          </p>
+          <h3>
+            23.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=pnp.polacode"
+              target="_blank"
+              >Polacode</a
+            >
+          </h3>
+          <p>
+            Polacode는 코드를 이미지로 쉽게 확인할 수 있어 개발자에게
+            유용합니다.
+          </p>
+          <h3>
+            24.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=zhucy.project-tree"
+              target="_blank"
+              >project-tree</a
+            >
+          </h3>
+          <p>
+            project-tree는 프로젝트 구조를 쉽게 확인할 수 있어 개발자에게
+            유용합니다.
+          </p>
+          <h3>
+            25.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf"
+              target="_blank"
+              >vscode-pdf</a
+            >
+          </h3>
+          <p>
+            vscode-pdf는 PDF 파일을 쉽게 확인할 수 있어 개발자에게 유용합니다.
+          </p>
+          <h3>
+            26.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=DotJoshJohnson.xml"
+              target="_blank"
+              >XML Tools</a
+            >
+          </h3>
+          <p>
+            XML Tools는 XML 파일을 쉽게 확인할 수 있어 개발자에게 유용합니다.
+          </p>
+          <h3>
+            27.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml"
+              target="_blank"
+              >YAML</a
+            >
+          </h3>
+          <p>YAML는 YAML 파일을 쉽게 확인할 수 있어 개발자에게 유용합니다.</p>
+          <h3>
+            28.
+            <a
+              href="https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint"
+              target="_blank"
+              >markdownlint</a
+            >
+          </h3>
+          <p>
+            markdownlint는 Markdown 파일을 쉽게 확인할 수 있어 개발자에게
+            유용합니다.
+          </p>
+          <p>
+            이러한 확장 프로그램들을 활용하면 Visual Studio Code에서 효율적인
+            C++ 개발 환경을 구성할 수 있습니다.
+          </p>
+        </article>
+      </main>
+    </div>
+    <footer>
+      <div class="site-footer">
+        <p>© 2025 Sungkuk Park · VFX Optics</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -90,6 +90,28 @@ body {
   background: #fafafa;
 }
 
+/* 코드 블록 스타일 */
+code {
+  display: block;
+  background-color: #f8f8f8;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+  color: #24292e;
+  white-space: pre-line;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 포스트 날짜 스타일 */
+.post-date {
+  color: #666;
+  font-size: 0.9em;
+  margin-left: 12px;
+}
+
 @media screen and (max-width: 768px) {
   .logo img {
     width: 256px; /* Mobile device's screen */
