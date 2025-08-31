@@ -1,184 +1,267 @@
 <!DOCTYPE html>
-<html lang="ko">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="ko" data-font-theme="modern-tech">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Unreal Lighting Camp – Technical Lighting in Unreal 5.6</title>
-    <link rel="icon" sizes="32x32" href="img/favicon-32.png?v=2" type="image/png">
-    <link rel="icon" sizes="192x192" href="img/favicon-192.png?v=2" type="image/png">
-    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png?v=2">
-    <link rel="stylesheet" href="css/fonts-en.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link
+      rel="icon"
+      sizes="32x32"
+      href="img/favicon-32.png?v=2"
+      type="image/png"
+    />
+    <link
+      rel="icon"
+      sizes="192x192"
+      href="img/favicon-192.png?v=2"
+      type="image/png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="img/apple-touch-icon.png?v=2"
+    />
+    <!-- Korean font -->
+    <link rel="stylesheet" href="css/fonts-ko.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-<body>
+  <body>
     <header>
-        <div class="lang-switch">
-            <a href="index.html">English</a>
-            <a href="../../index.html" class="about-btn">About</a>
+      <div class="lang-switch">
+        <a href="index.html">English</a>
+        <a href="../../index.html" class="about-btn">About</a>
+      </div>
+      <div class="wrap">
+        <div class="title">
+          <h1>언리얼 라이팅 캠프 — 언리얼 5.6 테크니컬 라이팅 프로그램</h1>
         </div>
-        <div class="wrap">
-            <div class="title">
-                <h1>언리얼 라이팅 캠프 — 언리얼 5.6 테크니컬 라이팅 프로그램</h1>
-            </div>
-            <div class="program-banner">
-                본 강의 프로그램은 <a href="https://realtimelighting.net/"><strong>언리얼 라이팅 캠프</strong></a>의 일환으로 디자인되었습니다.
-            </div>
-            <nav aria-label="섹션 내비게이션">
-                <a href="#ep1">1. 기초 (Essentials)</a>
-                <a href="#ep2">2. 환경 (Environments)</a>
-                <a href="#ep3">3. 캐릭터 (Characters)</a>
-            </nav>
+        <div class="program-banner">
+          본 강의 프로그램은
+          <a href="https://realtimelighting.net/"
+            ><strong>언리얼 라이팅 캠프</strong></a
+          >의 일환으로 디자인되었습니다.
         </div>
+        <nav aria-label="섹션 내비게이션">
+          <a href="#ep1">1. 기초 (Essentials)</a>
+          <a href="#ep2">2. 환경 (Environments)</a>
+          <a href="#ep3">3. 캐릭터 (Characters)</a>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <!-- EPISODE 1 -->
-        <section id="ep1">
-            <h2>언리얼 5.6 테크니컬 라이팅 : 기초 — 3점 조명 & 라이트 픽스처(Light Fixture)</h2>
-            <div class="poster">
-                <img src="img/ep1-essentials-3point-lighting-fixtures.png" alt="Essentials – 3 Point Setup & Fixtures"
-                    width="512">
+      <!-- EPISODE 1 -->
+      <section id="ep1">
+        <h2>
+          언리얼 5.6 테크니컬 라이팅 : 기초 — 3점 조명 & 라이트 픽스처(Light
+          Fixture)
+        </h2>
+        <div class="poster">
+          <img
+            src="img/ep1-essentials-3point-lighting-fixtures.png"
+            alt="Essentials – 3 Point Setup & Fixtures"
+            width="512"
+          />
+        </div>
+        <div class="grid">
+          <div>
+            <h3>핵심 학습</h3>
+            <ul>
+              <li>
+                언리얼 라이트의 타입(Type)과 세팅:
+                <ul>
+                  <li>포인트(Point)</li>
+                  <li>스팟(Spot)</li>
+                  <li>렉트(Rect)</li>
+                  <li>디렉셔널(Directional)</li>
+                </ul>
+              </li>
+              <li>
+                3점 조명
+                <ul>
+                  <li>키 라이트(Key Light)</li>
+                  <li>림 라이트(Rim Light)</li>
+                  <li>필 라이트(Fill Light)</li>
+                </ul>
+                라이트 설치 및 제어
+              </li>
+              <li>
+                블루프린트 기본
+                <ul>
+                  <li>변수(Variable)</li>
+                  <li>이벤트(Event)</li>
+                  <li>함수(Function)</li>
+                </ul>
+              </li>
+              <li>
+                라이트 픽스처(Light Fixture) 블루프린트 제작
+                <ul>
+                  <li>On/Off 스위치 제어</li>
+                  <li>Intensity · Color 파라미터 조정</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="result">
+              <h3>결과물</h3>
+              <ul>
+                <li>
+                  <strong>3점 조명</strong>이 적용된 캐릭터 · 오브젝트 기초 씬
+                </li>
+                <li>
+                  <strong>라이트 픽스처(Light Fixture)</strong> 블루프린트 액터
+                  (스위치 제어, 강도 · 색상 조절 가능)
+                </li>
+              </ul>
             </div>
-            <div class="grid">
-                <div>
-                    <h3>핵심 학습</h3>
-                    <ul>
-                        <li>언리얼 라이트의 타입(Type)과 세팅:
-                            <ul>
-                                <li>포인트(Point)</li>
-                                <li>스팟(Spot)</li>
-                                <li>렉트(Rect)</li>
-                                <li>디렉셔널(Directional)</li>
-                            </ul>
-                        </li>
-                        <li>3점 조명
-                            <ul>
-                                <li>키 라이트(Key Light)</li>
-                                <li>림 라이트(Rim Light)</li>
-                                <li>필 라이트(Fill Light)</li>
-                            </ul>
-                            라이트 설치 및 제어
-                        </li>
-                        <li>블루프린트 기본
-                            <ul>
-                                <li>변수(Variable)</li>
-                                <li>이벤트(Event)</li>
-                                <li>함수(Function)</li>
-                            </ul>
-                        </li>
-                        <li>라이트 픽스처(Light Fixture) 블루프린트 제작
-                            <ul>
-                                <li>On/Off 스위치 제어</li>
-                                <li>Intensity · Color 파라미터 조정</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>결과물</h3>
-                        <ul>
-                            <li><strong>3점 조명</strong>이 적용된 캐릭터 · 오브젝트 기초 씬</li>
-                            <li><strong>라이트 픽스처(Light Fixture)</strong> 블루프린트 액터 (스위치 제어, 강도 · 색상 조절 가능)</li>
-                        </ul>
-                    </div>
-                    <p class="meta">키워드: 라이트 타입, 3점 조명, 라이트 픽스처, 블루프린트 기초</p>
-                </div>
-            </div>
-        </section>
+            <p class="meta">
+              키워드: 라이트 타입, 3점 조명, 라이트 픽스처, 블루프린트 기초
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <!-- EPISODE 2 -->
-        <section id="ep2">
-            <h2>언리얼 5.6 테크니컬 라이팅 : 환경 — 스카이 돔(Sky Dome) & 시퀀서</h2>
-            <div class="poster">
-                <img src="img/ep2-environments-sky-dome-sequencer.png" alt="Environments – Sky Dome & Sequencer"
-                    width="512">
+      <!-- EPISODE 2 -->
+      <section id="ep2">
+        <h2>
+          언리얼 5.6 테크니컬 라이팅 : 환경 — 스카이 돔(Sky Dome) & 시퀀서
+        </h2>
+        <div class="poster">
+          <img
+            src="img/ep2-environments-sky-dome-sequencer.png"
+            alt="Environments – Sky Dome & Sequencer"
+            width="512"
+          />
+        </div>
+        <div class="grid">
+          <div>
+            <h3>핵심 학습</h3>
+            <ul>
+              <li>
+                스카이 돔(Sky Dome) &
+                <span lang="en">스카이 애트모스피어(Sky Atmosphere)</span> 구축
+              </li>
+              <li>
+                시퀀서(Sequencer)로 카메라 · 라이트 동기화 (이벤트 기반 컷신)
+              </li>
+              <li>
+                블루프린트 타임라인(Timeline) 노드로 <strong>밤/낮 전환</strong>
+              </li>
+              <li>
+                볼류메트릭 포그(Volumetric Fog), 포스트 프로세스(Post Process)
+                기초
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="result">
+              <h3>결과물</h3>
+              <ul>
+                <li>
+                  <strong>밤/낮(Day/Night)</strong> 전환과 라이트가 동기화된
+                  스카이 돔(Sky Dome)을 활용한 시네마틱 씬
+                </li>
+                <li>
+                  <strong>시퀀서(Sequencer) 컷씬</strong> (카메라 컷 · 라이트
+                  페이드 이벤트 연동)
+                </li>
+              </ul>
             </div>
-            <div class="grid">
-                <div>
-                    <h3>핵심 학습</h3>
-                    <ul>
-                        <li>스카이 돔(Sky Dome) & <span lang="en">스카이 애트모스피어(Sky Atmosphere)</span> 구축</li>
-                        <li>시퀀서(Sequencer)로 카메라 · 라이트 동기화 (이벤트 기반 컷신)</li>
-                        <li>블루프린트 타임라인(Timeline) 노드로 <strong>밤/낮 전환</strong></li>
-                        <li>볼류메트릭 포그(Volumetric Fog), 포스트 프로세스(Post Process) 기초</li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>결과물</h3>
-                        <ul>
-                            <li><strong>밤/낮(Day/Night)</strong> 전환과 라이트가 동기화된 스카이 돔(Sky Dome)을 활용한 시네마틱 씬</li>
-                            <li><strong>시퀀서(Sequencer) 컷씬</strong> (카메라 컷 · 라이트 페이드 이벤트 연동)</li>
-                        </ul>
-                    </div>
-                    <p class="meta">키워드: 스카이 돔, 시퀀서, 타임라인, 포그(Fog), 포스트 프로세스</p>
-                </div>
-            </div>
-        </section>
+            <p class="meta">
+              키워드: 스카이 돔, 시퀀서, 타임라인, 포그(Fog), 포스트 프로세스
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <!-- EPISODE 3 -->
-        <section id="ep3">
-            <h2>언리얼 5.6 테크니컬 라이팅 : 캐릭터 — 메타휴먼 & 프로덕션 딜리버리(Production Delivery)</h2>
-            <div class="poster">
-                <img src="img/ep3-characters-metahuman-production-delivery.png"
-                    alt="Characters – Metahuman & Production Delivery" width="512">
+      <!-- EPISODE 3 -->
+      <section id="ep3">
+        <h2>
+          언리얼 5.6 테크니컬 라이팅 : 캐릭터 — 메타휴먼 & 프로덕션
+          딜리버리(Production Delivery)
+        </h2>
+        <div class="poster">
+          <img
+            src="img/ep3-characters-metahuman-production-delivery.png"
+            alt="Characters – Metahuman & Production Delivery"
+            width="512"
+          />
+        </div>
+        <div class="grid">
+          <div>
+            <h3>핵심 학습</h3>
+            <ul>
+              <li>
+                메타휴먼 라이팅
+                <ul>
+                  <li>스킨 셰이딩(Skin Shading)</li>
+                  <li>
+                    <strong
+                      >아이 스페큘러(Eye Specular) /
+                      캐치라이트(Catchlight)</strong
+                    >
+                  </li>
+                  <li>3점 조명 강화 및 캐릭터 최적 세팅</li>
+                </ul>
+              </li>
+              <li>
+                <strong>메타휴먼 + 시퀀서 연출</strong>
+                <ul>
+                  <li>연기 타이밍에 맞춘 라이트 이벤트</li>
+                  <li>컷신 기반 시네마틱 시퀀스 제작</li>
+                </ul>
+              </li>
+              <li>
+                컨스트럭션 스크립트(Construction Script)로 라이트 픽스처(Light
+                Fixture) 대규모 배치/관리
+              </li>
+              <li>머티리얼 & 포스트프로세스 파라미터 제어</li>
+              <li>
+                대규모 씬 최적화
+                <ul>
+                  <li>라이트 채널(Light Channel) 활용</li>
+                  <li>LOD(Level Of Details) · 컬링(Culling)</li>
+                  <li>이벤트 틱(Event Tick) 최소화</li>
+                </ul>
+              </li>
+              <li>
+                <strong>프로덕션 딜리버리(Production Delivery)</strong>
+                <ul>
+                  <li>언리얼 빌드 및 패키징(Packaging) 설정</li>
+                  <li>무비 렌더 큐(Movie Render Queue)로 시네마틱 출력</li>
+                  <li>
+                    프로덕션 딜리버리(Production Delivery)용 최적화 워크플로우
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="result">
+              <h3>결과물</h3>
+              <ul>
+                <li>
+                  <strong>메타휴먼 시네마틱</strong>: 캐릭터 연기(Acting) + 아이
+                  스페큘러(Eye Specular)/캐치라이트(Catchlight) + 라이트/환경
+                  동기화
+                </li>
+                <li>
+                  <strong>프로덕션 딜리버리(Production Delivery)</strong>
+                  산출물: 언리얼 빌드 패키지 & 시네마틱 영상
+                </li>
+              </ul>
             </div>
-            <div class="grid">
-                <div>
-                    <h3>핵심 학습</h3>
-                    <ul>
-                        <li>메타휴먼 라이팅
-                            <ul>
-                                <li>스킨 셰이딩(Skin Shading)</li>
-                                <li><strong>아이 스페큘러(Eye Specular) / 캐치라이트(Catchlight)</strong></li>
-                                <li>3점 조명 강화 및 캐릭터 최적 세팅</li>
-                            </ul>
-                        </li>
-                        <li><strong>메타휴먼 + 시퀀서 연출</strong>
-                            <ul>
-                                <li>연기 타이밍에 맞춘 라이트 이벤트</li>
-                                <li>컷신 기반 시네마틱 시퀀스 제작</li>
-                            </ul>
-                        </li>
-                        <li>컨스트럭션 스크립트(Construction Script)로 라이트 픽스처(Light Fixture) 대규모 배치/관리</li>
-                        <li>머티리얼 & 포스트프로세스 파라미터 제어</li>
-                        <li>대규모 씬 최적화
-                            <ul>
-                                <li>라이트 채널(Light Channel) 활용</li>
-                                <li>LOD(Level Of Details) · 컬링(Culling)</li>
-                                <li>이벤트 틱(Event Tick) 최소화</li>
-                            </ul>
-                        </li>
-                        <li><strong>프로덕션 딜리버리(Production Delivery)</strong>
-                            <ul>
-                                <li>언리얼 빌드 및 패키징(Packaging) 설정</li>
-                                <li>무비 렌더 큐(Movie Render Queue)로 시네마틱 출력</li>
-                                <li>프로덕션 딜리버리(Production Delivery)용 최적화 워크플로우</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>결과물</h3>
-                        <ul>
-                            <li><strong>메타휴먼 시네마틱</strong>: 캐릭터 연기(Acting) + 아이 스페큘러(Eye Specular)/캐치라이트(Catchlight) +
-                                라이트/환경 동기화
-                            </li>
-                            <li><strong>프로덕션 딜리버리(Production Delivery)</strong> 산출물: 언리얼 빌드 패키지 & 시네마틱 영상</li>
-                        </ul>
-                    </div>
-                    <p class="meta">키워드: 메타휴먼, 시퀀서, 패키징, 최적화, 포스트 FX</p>
-                </div>
-            </div>
-        </section>
+            <p class="meta">
+              키워드: 메타휴먼, 시퀀서, 패키징, 최적화, 포스트 FX
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
     <footer class="site-footer">
-        <p>© 2025 Sungkuk Park · VFX Optics</p>
+      <p>© 2025 Sungkuk Park · VFX Optics</p>
     </footer>
-</body>
-
+  </body>
 </html>

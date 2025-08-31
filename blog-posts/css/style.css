@@ -1,0 +1,50 @@
+/* 버튼 컨테이너 */
+.button-container {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post-list-btn a {
+  padding: 8px 16px;
+  background-color: #5c009f;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.blog-post-list-btn a:hover {
+  background-color: #4a0080;
+}
+
+.lang-switch a {
+  padding: 8px 16px;
+  background-color: #5c009f;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.lang-switch a:hover {
+  background-color: #4a0080;
+}
+
+.lang-switch .about-btn {
+  background-color: #3498db; /* 파란색 계열 */
+}
+
+.lang-switch .about-btn:hover {
+  background-color: #2980b9;
+}

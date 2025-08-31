@@ -1,187 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Unreal Lighting Camp – Technical Lighting in Unreal 5.6</title>
-    <link rel="icon" sizes="32x32" href="img/favicon-32.png?v=2" type="image/png">
-    <link rel="icon" sizes="192x192" href="img/favicon-192.png?v=2" type="image/png">
-    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png?v=2">
-    <link rel="stylesheet" href="css/fonts-en.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link
+      rel="icon"
+      sizes="32x32"
+      href="img/favicon-32.png?v=2"
+      type="image/png"
+    />
+    <link
+      rel="icon"
+      sizes="192x192"
+      href="img/favicon-192.png?v=2"
+      type="image/png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="img/apple-touch-icon.png?v=2"
+    />
+    <link rel="stylesheet" href="css/fonts-en.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-<body>
+  <body>
     <header>
-        <div class="lang-switch">
-            <a href="index-ko.html">한국어</a>
-            <a href="../../index.html" class="about-btn">About</a>
+      <div class="lang-switch">
+        <a href="index-ko.html">한국어</a>
+        <a href="../../index.html" class="about-btn">자기 소개</a>
+      </div>
+      <div class="wrap">
+        <div class="title">
+          <h1>
+            Unreal Lighting Camp — Technical Lighting in Unreal 5.6 Program
+          </h1>
         </div>
-        <div class="wrap">
-            <div class="title">
-                <h1>Unreal Lighting Camp — Technical Lighting in Unreal 5.6 Program</h1>
-            </div>
-            <div class="program-banner">
-                This program is part of the <a href="https://realtimelighting.net/"><strong>Unreal Lighting
-                        Camp</strong></a>.
-            </div>
-            <nav aria-label="section navigation">
-                <a href="#ep1">1. Essentials</a>
-                <a href="#ep2">2. Environments</a>
-                <a href="#ep3">3. Characters</a>
-            </nav>
+        <div class="program-banner">
+          This program is part of the
+          <a href="https://realtimelighting.net/"
+            ><strong>Unreal Lighting Camp</strong></a
+          >.
         </div>
+        <nav aria-label="section navigation">
+          <a href="#ep1">1. Essentials</a>
+          <a href="#ep2">2. Environments</a>
+          <a href="#ep3">3. Characters</a>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <!-- EPISODE 1 -->
-        <section id="ep1">
-            <h2>Technical Lighting in Unreal 5.6: Essentials — 3 Point Setup & Light Fixtures</h2>
-            <div class="poster">
-                <img src="img/ep1-essentials-3point-lighting-fixtures.png" alt="Essentials – 3 Point Setup & Fixtures"
-                    width="512">
+      <!-- EPISODE 1 -->
+      <section id="ep1">
+        <h2>
+          Technical Lighting in Unreal 5.6: Essentials — 3 Point Setup & Light
+          Fixtures
+        </h2>
+        <div class="poster">
+          <img
+            src="img/ep1-essentials-3point-lighting-fixtures.png"
+            alt="Essentials – 3 Point Setup & Fixtures"
+            width="512"
+          />
+        </div>
+        <div class="grid">
+          <div>
+            <h3>Key Learnings</h3>
+            <ul>
+              <li>
+                Unreal light types & setup:
+                <ul>
+                  <li>Point</li>
+                  <li>Spot</li>
+                  <li>Rect</li>
+                  <li>Directional</li>
+                </ul>
+              </li>
+              <li>
+                3 Point Lighting setup and control:
+                <ul>
+                  <li>Key Light</li>
+                  <li>Rim Light</li>
+                  <li>Fill Light</li>
+                </ul>
+              </li>
+              <li>
+                Blueprint basics:
+                <ul>
+                  <li>Variables</li>
+                  <li>Events</li>
+                  <li>Functions</li>
+                </ul>
+              </li>
+              <li>
+                Light Fixture Blueprint:
+                <ul>
+                  <li>On/Off switch control</li>
+                  <li>Intensity & Color parameter adjustment</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="result">
+              <h3>Outcomes</h3>
+              <ul>
+                <li>
+                  <strong>3 Point Lighting</strong> applied to a
+                  character/object basic scene
+                </li>
+                <li>
+                  <strong>Light Fixture</strong> blueprint actor (switch
+                  control, intensity/color adjustment)
+                </li>
+              </ul>
             </div>
-            <div class="grid">
-                <div>
-                    <h3>Key Learnings</h3>
-                    <ul>
-                        <li>Unreal light types & setup:
-                            <ul>
-                                <li>Point</li>
-                                <li>Spot</li>
-                                <li>Rect</li>
-                                <li>Directional</li>
-                            </ul>
-                        </li>
-                        <li>3 Point Lighting setup and control:
-                            <ul>
-                                <li>Key Light</li>
-                                <li>Rim Light</li>
-                                <li>Fill Light</li>
-                            </ul>
-                        </li>
-                        <li>Blueprint basics:
-                            <ul>
-                                <li>Variables</li>
-                                <li>Events</li>
-                                <li>Functions</li>
-                            </ul>
-                        </li>
-                        <li>Light Fixture Blueprint:
-                            <ul>
-                                <li>On/Off switch control</li>
-                                <li>Intensity & Color parameter adjustment</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>Outcomes</h3>
-                        <ul>
-                            <li><strong>3 Point Lighting</strong> applied to a character/object basic scene</li>
-                            <li><strong>Light Fixture</strong> blueprint actor (switch control, intensity/color
-                                adjustment)</li>
-                        </ul>
-                    </div>
-                    <p class="meta">Keywords: Light Types, 3 Point Lighting, Light Fixture, Blueprint Basics</p>
-                </div>
-            </div>
-        </section>
+            <p class="meta">
+              Keywords: Light Types, 3 Point Lighting, Light Fixture, Blueprint
+              Basics
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <!-- EPISODE 2 -->
-        <section id="ep2">
-            <h2>Technical Lighting in Unreal 5.6: Environments — Sky Dome & Sequencer</h2>
-            <div class="poster">
-                <img src="img/ep2-environments-sky-dome-sequencer.png" alt="Environments – Sky Dome & Sequencer"
-                    width="512">
+      <!-- EPISODE 2 -->
+      <section id="ep2">
+        <h2>
+          Technical Lighting in Unreal 5.6: Environments — Sky Dome & Sequencer
+        </h2>
+        <div class="poster">
+          <img
+            src="img/ep2-environments-sky-dome-sequencer.png"
+            alt="Environments – Sky Dome & Sequencer"
+            width="512"
+          />
+        </div>
+        <div class="grid">
+          <div>
+            <h3>Key Learnings</h3>
+            <ul>
+              <li>Sky Dome & Sky Atmosphere setup</li>
+              <li>
+                Sequencer for syncing camera & lights (event-driven cutscenes)
+              </li>
+              <li>
+                Blueprint Timeline node for
+                <strong>Day/Night transitions</strong>
+              </li>
+              <li>Volumetric Fog, Post Process basics</li>
+            </ul>
+          </div>
+          <div>
+            <div class="result">
+              <h3>Outcomes</h3>
+              <ul>
+                <li>
+                  <strong>Day/Night</strong> cinematic scene with Sky Dome and
+                  synced lighting
+                </li>
+                <li>
+                  <strong>Sequencer cutscene</strong> (camera cuts & light fades
+                  triggered by events)
+                </li>
+              </ul>
             </div>
-            <div class="grid">
-                <div>
-                    <h3>Key Learnings</h3>
-                    <ul>
-                        <li>Sky Dome & Sky Atmosphere setup</li>
-                        <li>Sequencer for syncing camera & lights (event-driven cutscenes)</li>
-                        <li>Blueprint Timeline node for <strong>Day/Night transitions</strong></li>
-                        <li>Volumetric Fog, Post Process basics</li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>Outcomes</h3>
-                        <ul>
-                            <li><strong>Day/Night</strong> cinematic scene with Sky Dome and synced lighting</li>
-                            <li><strong>Sequencer cutscene</strong> (camera cuts & light fades triggered by events)</li>
-                        </ul>
-                    </div>
-                    <p class="meta">Keywords: Sky Dome, Sequencer, Timeline, Fog, Post Process</p>
-                </div>
-            </div>
-        </section>
+            <p class="meta">
+              Keywords: Sky Dome, Sequencer, Timeline, Fog, Post Process
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <!-- EPISODE 3 -->
-        <section id="ep3">
-            <h2>Technical Lighting in Unreal 5.6: Characters — Metahuman & Production Delivery</h2>
-            <div class="poster">
-                <img src="img/ep3-characters-metahuman-production-delivery.png"
-                    alt="Characters – Metahuman & Production Delivery" width="512">
+      <!-- EPISODE 3 -->
+      <section id="ep3">
+        <h2>
+          Technical Lighting in Unreal 5.6: Characters — Metahuman & Production
+          Delivery
+        </h2>
+        <div class="poster">
+          <img
+            src="img/ep3-characters-metahuman-production-delivery.png"
+            alt="Characters – Metahuman & Production Delivery"
+            width="512"
+          />
+        </div>
+        <div class="grid">
+          <div>
+            <h3>Key Learnings</h3>
+            <ul>
+              <li>
+                Metahuman lighting:
+                <ul>
+                  <li>Skin Shading</li>
+                  <li><strong>Eye Specular / Catchlight</strong></li>
+                  <li>Enhanced Key / Rim / Fill setup for characters</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Metahuman + Sequencer direction</strong>:
+                <ul>
+                  <li>Lighting events synced with acting performance</li>
+                  <li>Cutscene-based cinematic sequence</li>
+                </ul>
+              </li>
+              <li>
+                Construction Script for large-scale Light Fixture
+                placement/management
+              </li>
+              <li>Material & Post Process parameter control</li>
+              <li>
+                Large-scene optimization:
+                <ul>
+                  <li>Light Channels</li>
+                  <li>LOD(Level Of Details) · Culling</li>
+                  <li>Minimizing Event Tick</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Production Delivery</strong>:
+                <ul>
+                  <li>Unreal build & packaging settings</li>
+                  <li>Cinematic output via Movie Render Queue</li>
+                  <li>Optimized workflow for production-ready delivery</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="result">
+              <h3>Outcomes</h3>
+              <ul>
+                <li>
+                  <strong>Metahuman cinematic</strong>: Character acting + Eye
+                  Specular / Catchlight + synced lighting/environment
+                </li>
+                <li>
+                  <strong>Production Delivery</strong> outputs: Unreal packaged
+                  build & cinematic video
+                </li>
+              </ul>
             </div>
-            <div class="grid">
-                <div>
-                    <h3>Key Learnings</h3>
-                    <ul>
-                        <li>Metahuman lighting:
-                            <ul>
-                                <li>Skin Shading</li>
-                                <li><strong>Eye Specular / Catchlight</strong></li>
-                                <li>Enhanced Key / Rim / Fill setup for characters</li>
-                            </ul>
-                        </li>
-                        <li><strong>Metahuman + Sequencer direction</strong>:
-                            <ul>
-                                <li>Lighting events synced with acting performance</li>
-                                <li>Cutscene-based cinematic sequence</li>
-                            </ul>
-                        </li>
-                        <li>Construction Script for large-scale Light Fixture placement/management</li>
-                        <li>Material & Post Process parameter control</li>
-                        <li>Large-scene optimization:
-                            <ul>
-                                <li>Light Channels</li>
-                                <li>LOD(Level Of Details) · Culling</li>
-                                <li>Minimizing Event Tick</li>
-                            </ul>
-                        </li>
-                        <li><strong>Production Delivery</strong>:
-                            <ul>
-                                <li>Unreal build & packaging settings</li>
-                                <li>Cinematic output via Movie Render Queue</li>
-                                <li>Optimized workflow for production-ready delivery</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="result">
-                        <h3>Outcomes</h3>
-                        <ul>
-                            <li><strong>Metahuman cinematic</strong>: Character acting + Eye Specular / Catchlight +
-                                synced
-                                lighting/environment</li>
-                            <li><strong>Production Delivery</strong> outputs: Unreal packaged build & cinematic video
-                            </li>
-                        </ul>
-                    </div>
-                    <p class="meta">Keywords: Metahuman, Sequencer, Packaging, Production Delivery, Optimization, Post
-                        FX</p>
-                </div>
-            </div>
-        </section>
+            <p class="meta">
+              Keywords: Metahuman, Sequencer, Packaging, Production Delivery,
+              Optimization, Post FX
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
     <footer class="site-footer">
-        <p>© 2025 Sungkuk Park · VFX Optics</p>
+      <p>© 2025 Sungkuk Park · VFX Optics</p>
     </footer>
-</body>
-
+  </body>
 </html>
