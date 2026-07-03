@@ -18,8 +18,8 @@ type IngestLocale = (typeof INGEST_LOCALES)[number];
 /** Multiplayer-playable races in coh3-data (matches coh3-stats unit browser). */
 const PLAYER_FACTIONS = [
   "american",
-  "german",
   "british_africa",
+  "german",
   "afrika_korps",
 ] as const;
 

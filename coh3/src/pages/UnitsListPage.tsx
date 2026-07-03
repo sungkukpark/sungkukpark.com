@@ -1,9 +1,10 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { FactionEmblem, UnitPortrait } from "../components/GameImage";
+import { MP_COALITIONS } from "../factions";
 import { loadUnitsIndex } from "../data";
 import { useLocale } from "../i18n/LocaleContext";
-import { tCategory, tFaction } from "../i18n/messages";
+import { tCategory, tCoalition, tFaction } from "../i18n/messages";
 import { legacyDisplayName, type UnitSummary, type UnitsIndex } from "../types";
 
 export function UnitsListPage() {
@@ -72,16 +73,26 @@ export function UnitsListPage() {
       </div>
 
       <h2>{m.list.faction}</h2>
-      <div className="chip-row" role="toolbar" aria-label={m.list.faction}>
-        {index.factions.map((f) => (
-          <button
-            key={f}
-            type="button"
-            className={f === faction ? "chip active" : "chip"}
-            onClick={() => setFaction(f)}
+      <div className="faction-picker">
+        {MP_COALITIONS.map((coalition) => (
+          <div
+            key={coalition.id}
+            className={`coalition-chips coalition-chips--${coalition.id}`}
           >
-            {tFaction(locale, f)}
-          </button>
+            <span className="coalition-chip-label">{tCoalition(locale, coalition.id)}</span>
+            <div className="chip-row" role="group" aria-label={tCoalition(locale, coalition.id)}>
+              {coalition.factions.map((f) => (
+                <button
+                  key={f}
+                  type="button"
+                  className={f === faction ? "chip active" : "chip"}
+                  onClick={() => setFaction(f)}
+                >
+                  {tFaction(locale, f)}
+                </button>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
 

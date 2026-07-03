@@ -60,6 +60,10 @@ const en = {
     emplacements: "Emplacements",
     aircraft: "Aircraft",
   },
+  coalition: {
+    allies: "Allies",
+    axis: "Axis",
+  },
 } as const;
 
 const ko: typeof en = {
@@ -122,7 +126,11 @@ const ko: typeof en = {
     emplacements: "거점화기",
     aircraft: "항공",
   },
-};
+  coalition: {
+    allies: "연합국",
+    axis: "추축국",
+  },
+} as const;
 
 export const messages: Record<Locale, typeof en> = { en, ko };
 
@@ -136,4 +144,8 @@ export function tFaction(locale: Locale, faction: string): string {
 export function tCategory(locale: Locale, category: string): string {
   const map = messages[locale].category as Record<string, string>;
   return map[category] ?? category;
+}
+
+export function tCoalition(locale: Locale, id: "allies" | "axis"): string {
+  return messages[locale].coalition[id];
 }
