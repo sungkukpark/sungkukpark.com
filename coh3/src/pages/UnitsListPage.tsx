@@ -106,6 +106,9 @@ export function UnitsListPage() {
   const showFactionEmblem =
     faction !== FACTION_ALL && !isCoalitionFactionFilter(faction);
 
+  const showFactionOnUnitCards =
+    faction === FACTION_ALL || isCoalitionFactionFilter(faction);
+
   return (
     <section className="panel">
       <div className="panel-head">
@@ -230,12 +233,21 @@ export function UnitsListPage() {
                   className="unit-card unit-card--with-stat"
                   to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
                 >
-                  <UnitPortrait
-                    iconName={u.iconName}
-                    symbolIconName={u.symbolIconName}
-                    alt=""
-                    size="sm"
-                  />
+                  <div className="unit-card-media">
+                    <UnitPortrait
+                      iconName={u.iconName}
+                      symbolIconName={u.symbolIconName}
+                      alt=""
+                      size="sm"
+                    />
+                    {showFactionOnUnitCards && (
+                      <FactionEmblem
+                        faction={u.faction}
+                        label={tFaction(locale, u.faction)}
+                        size="sm"
+                      />
+                    )}
+                  </div>
                   <span className="unit-card-body">
                     <span className="unit-card-title">{name}</span>
                     <span className="mono">{u.unitKey}</span>

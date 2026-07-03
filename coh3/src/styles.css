@@ -334,6 +334,14 @@ a {
   background: var(--accent-soft);
 }
 
+.unit-card-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  flex-shrink: 0;
+}
+
 .unit-card-body {
   display: flex;
   flex-direction: column;
@@ -812,7 +820,7 @@ h2:first-child {
     align-items: center;
   }
 
-  .unit-card-list--compare .unit-card--with-stat > .unit-portrait {
+  .unit-card-list--compare .unit-card--with-stat > .unit-card-media {
     grid-row: 1 / 3;
     align-self: center;
   }
