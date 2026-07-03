@@ -41,10 +41,6 @@ const en = {
     loadError: "Failed to load data.",
     compareTitle: "Compare in this list",
     sortBy: "Sort by",
-    filterMin: "Minimum",
-    statRange: "Range",
-    statPenetration: "Penetration",
-    statDamage: "Damage",
     compareMore: (n: number) => `+ ${n} more in list below`,
   },
   detail: {
@@ -130,10 +126,6 @@ const ko: typeof en = {
     loadError: "데이터를 불러오지 못했습니다.",
     compareTitle: "목록 내 비교",
     sortBy: "정렬",
-    filterMin: "최소",
-    statRange: "사거리",
-    statPenetration: "관통",
-    statDamage: "피해",
     compareMore: (n: number) => `아래 목록에 ${n}개 더`,
   },
   detail: {

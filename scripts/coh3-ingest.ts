@@ -279,7 +279,7 @@ async function main() {
         const id = unitId(faction, category, unitKey);
         const pbgid = (raw as { pbgid?: number }).pbgid;
         const { iconName, symbolIconName } = extractUiIcons(raw);
-        const combat = extractCombatStats(raw, category, ebpsMap, weaponMap);
+        const combat = extractCombatStats(raw, category, unitKey, ebpsMap, weaponMap);
 
         summaries.push({
           id,

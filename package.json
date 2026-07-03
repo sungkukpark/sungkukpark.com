@@ -4,6 +4,7 @@
   "packageManager": "pnpm@9.15.4",
   "scripts": {
     "coh3:ingest": "tsx scripts/coh3-ingest.ts",
+    "coh3:validate-stats": "tsx scripts/coh3-validate-vs-coh3stats.ts",
     "dev:coh3": "vite --config coh3/vite.config.ts",
     "build:coh3": "vite build --config coh3/vite.config.ts",
     "build": "pnpm coh3:ingest && pnpm build:coh3 && node scripts/copy-site-shell.mjs",
