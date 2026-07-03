@@ -4,6 +4,12 @@
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
+import {
+  extractCombatStats,
+  indexEntitiesByKey,
+  indexWeaponsByKey,
+  type UnitCombatStats,
+} from "./coh3-combat-extract";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const DATA_TAG_PATH = path.join(ROOT, "coh3", "data-tag.json");
@@ -44,6 +50,7 @@ export type UnitSummary = {
   displayNames: LocalizedString;
   iconName?: string;
   symbolIconName?: string;
+  combat?: UnitCombatStats;
   pbgid?: number;
 };
 
@@ -63,6 +70,7 @@ export type UnitDetail = {
   dataTag: string;
   iconName?: string;
   symbolIconName?: string;
+  combat?: UnitCombatStats;
   localized: Record<IngestLocale, UnitLocaleBundle>;
   raw: unknown;
 };
@@ -226,6 +234,14 @@ async function main() {
 
   const locByLocale = await loadLocaleMaps(dataTag, record);
 
+  console.log("Loading ebps.json and weapon.json for combat stats…");
+  const ebpsRes = await fetchJson<unknown>(cdnUrl(dataTag, "ebps.json"));
+  record("ebps.json", ebpsRes.bytes, ebpsRes.sha256);
+  const weaponRes = await fetchJson<unknown>(cdnUrl(dataTag, "weapon.json"));
+  record("weapon.json", weaponRes.bytes, weaponRes.sha256);
+  const ebpsMap = indexEntitiesByKey(ebpsRes.data);
+  const weaponMap = indexWeaponsByKey(weaponRes.data);
+
   const summaries: UnitSummary[] = [];
 
   await rm(OUT_DATA, { recursive: true, force: true });
@@ -263,6 +279,7 @@ async function main() {
         const id = unitId(faction, category, unitKey);
         const pbgid = (raw as { pbgid?: number }).pbgid;
         const { iconName, symbolIconName } = extractUiIcons(raw);
+        const combat = extractCombatStats(raw, category, ebpsMap, weaponMap);
 
         summaries.push({
           id,
@@ -272,6 +289,7 @@ async function main() {
           displayNames,
           ...(iconName ? { iconName } : {}),
           ...(symbolIconName ? { symbolIconName } : {}),
+          ...(combat ? { combat } : {}),
           ...(pbgid != null ? { pbgid } : {}),
         });
 
@@ -291,6 +309,7 @@ async function main() {
           dataTag,
           ...(iconName ? { iconName } : {}),
           ...(symbolIconName ? { symbolIconName } : {}),
+          ...(combat ? { combat } : {}),
           localized,
           raw,
         };

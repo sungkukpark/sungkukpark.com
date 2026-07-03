@@ -1,17 +1,24 @@
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FactionEmblem, UnitPortrait } from "../components/GameImage";
-import { loadUnitDetail } from "../data";
+import { StatBarGroup } from "../components/StatBar";
+import { loadUnitDetail, loadUnitsIndex } from "../data";
 import { useLocale } from "../i18n/LocaleContext";
-import { tCategory, tFaction } from "../i18n/messages";
-import { type UnitDetail } from "../types";
+import { tCategory, tFaction, tStat } from "../i18n/messages";
+import { STAT_KEYS, maxStatInUnits, type StatKey } from "../stats";
+import { type UnitDetail, type UnitsIndex } from "../types";
 
 export function UnitDetailPage() {
   const { locale, m } = useLocale();
   const { faction, category, unitKey } = useParams();
   const [detail, setDetail] = useState<UnitDetail | null>(null);
+  const [index, setIndex] = useState<UnitsIndex | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showRaw, setShowRaw] = useState(false);
+
+  useEffect(() => {
+    loadUnitsIndex().then(setIndex).catch(() => setIndex(null));
+  }, []);
 
   useEffect(() => {
     if (!faction || !category || !unitKey) return;
@@ -21,6 +28,19 @@ export function UnitDetailPage() {
       .then(setDetail)
       .catch((e) => setError(e instanceof Error ? e.message : "Load failed"));
   }, [faction, category, unitKey]);
+
+  const categoryPool = useMemo(() => {
+    if (!index || !faction || !category) return [];
+    return index.units.filter((u) => u.faction === faction && u.category === category);
+  }, [index, faction, category]);
+
+  const maxByKey = useMemo(() => {
+    const out: Partial<Record<StatKey, number>> = {};
+    for (const key of STAT_KEYS) {
+      out[key] = maxStatInUnits(categoryPool, key);
+    }
+    return out;
+  }, [categoryPool]);
 
   if (!faction || !category || !unitKey) {
     return <p className="error">{m.detail.invalidUrl}</p>;
@@ -71,6 +91,18 @@ export function UnitDetailPage() {
           </p>
         </div>
       </header>
+
+      {detail.combat && (
+        <section className="combat-stats-panel">
+          <h3>{m.detail.combatTitle}</h3>
+          <StatBarGroup
+            stats={detail.combat}
+            maxByKey={maxByKey}
+            keys={[...STAT_KEYS]}
+            labelForKey={(k) => tStat(locale, k)}
+          />
+        </section>
+      )}
 
       <label className="raw-toggle">
         <input

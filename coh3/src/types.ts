@@ -1,4 +1,6 @@
 import type { Locale } from "./i18n/locale";
+import type { UnitCombatStats } from "./stats";
+import { STAT_KEYS, type StatKey } from "./stats";
 
 export const OPEN_DATA_URL = "https://coh3stats.com/other/open-data";
 export type LocalizedString = { en: string; ko: string };
@@ -24,6 +26,7 @@ export type UnitSummary = {
   displayNames: LocalizedString;
   iconName?: string;
   symbolIconName?: string;
+  combat?: UnitCombatStats;
   pbgid?: number;
 };
 
@@ -52,6 +55,7 @@ export type UnitDetail = {
   dataTag: string;
   iconName?: string;
   symbolIconName?: string;
+  combat?: UnitCombatStats;
   localized: Record<Locale, UnitLocaleBundle>;
   raw: unknown;
 };

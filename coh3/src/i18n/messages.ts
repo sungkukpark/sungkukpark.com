@@ -1,4 +1,5 @@
 import type { Locale } from "./locale";
+import { STAT_KEYS, type StatKey } from "../stats";
 
 const en = {
   lang: {
@@ -34,6 +35,13 @@ const en = {
     noUnits: "No units in this category.",
     loading: "Loading…",
     loadError: "Failed to load data.",
+    compareTitle: "Compare in this list",
+    sortBy: "Sort by",
+    filterMin: "Minimum",
+    statRange: "Range",
+    statPenetration: "Penetration",
+    statDamage: "Damage",
+    compareMore: (n: number) => `+ ${n} more in list below`,
   },
   detail: {
     hub: "Hub",
@@ -46,6 +54,7 @@ const en = {
     backToList: "Back to list",
     noSections: "No extension sections parsed. Use raw JSON.",
     dataTag: "Data tag",
+    combatTitle: "Combat stats (vs category max)",
   },
   faction: {
     american: "US Forces",
@@ -63,6 +72,17 @@ const en = {
   coalition: {
     allies: "Allies",
     axis: "Axis",
+  },
+  stats: {
+    costMp: "Manpower",
+    costPop: "Population",
+    health: "Health",
+    range: "Range",
+    penetration: "Penetration",
+    damage: "Damage",
+    dps: "DPS (est.)",
+    armor: "Armor",
+    sight: "Sight",
   },
 } as const;
 
@@ -100,6 +120,13 @@ const ko: typeof en = {
     noUnits: "이 카테고리에 유닛이 없습니다.",
     loading: "불러오는 중…",
     loadError: "데이터를 불러오지 못했습니다.",
+    compareTitle: "목록 내 비교",
+    sortBy: "정렬",
+    filterMin: "최소",
+    statRange: "사거리",
+    statPenetration: "관통",
+    statDamage: "피해",
+    compareMore: (n: number) => `아래 목록에 ${n}개 더`,
   },
   detail: {
     hub: "허브",
@@ -112,6 +139,7 @@ const ko: typeof en = {
     backToList: "목록으로",
     noSections: "파싱된 확장 섹션이 없습니다. 원본 JSON을 사용하세요.",
     dataTag: "데이터 태그",
+    combatTitle: "전투 스탯 (카테고리 최대 대비)",
   },
   faction: {
     american: "미군",
@@ -130,11 +158,24 @@ const ko: typeof en = {
     allies: "연합국",
     axis: "추축국",
   },
+  stats: {
+    costMp: "인력",
+    costPop: "인구",
+    health: "체력",
+    range: "사거리",
+    penetration: "관통",
+    damage: "피해",
+    dps: "DPS (추정)",
+    armor: "장갑",
+    sight: "시야",
+  },
 } as const;
 
 export const messages: Record<Locale, typeof en> = { en, ko };
 
 export type Messages = typeof en;
+
+export { STAT_KEYS, type StatKey };
 
 export function tFaction(locale: Locale, faction: string): string {
   const map = messages[locale].faction as Record<string, string>;
@@ -148,4 +189,8 @@ export function tCategory(locale: Locale, category: string): string {
 
 export function tCoalition(locale: Locale, id: "allies" | "axis"): string {
   return messages[locale].coalition[id];
+}
+
+export function tStat(locale: Locale, key: StatKey): string {
+  return messages[locale].stats[key];
 }
