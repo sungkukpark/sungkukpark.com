@@ -9,7 +9,7 @@ const en = {
   layout: {
     hubLink: "COH3 analysis hub",
     title: "Unit reference",
-    lede: "Data-driven unit specs for strategy and analysis. Patch-pinned open data from COH3 Stats.",
+    lede: "Multiplayer unit specs for strategy and analysis. Patch-pinned open data from COH3 Stats.",
     footerAttribution: "Unit data from",
     footerDisclaimer: "Not affiliated with Relic or SEGA.",
     footerIcons: "Icons from COH3 Stats (coh3stats.com / cdn.coh3stats.com).",
@@ -50,9 +50,8 @@ const en = {
   faction: {
     american: "US Forces",
     german: "Wehrmacht",
-    british: "British Forces",
+    british_africa: "British Forces",
     afrika_korps: "Afrika Korps",
-    british_africa: "British (Africa)",
   },
   category: {
     infantry: "Infantry",
@@ -72,7 +71,7 @@ const ko: typeof en = {
   layout: {
     hubLink: "COH3 분석 허브",
     title: "유닛 레퍼런스",
-    lede: "전략·분석용 유닛 스펙. COH3 Stats 오픈 데이터를 패치 단위로 고정해 표시합니다.",
+    lede: "멀티플레이 기준 유닛 스펙. COH3 Stats 오픈 데이터를 패치 단위로 고정해 표시합니다.",
     footerAttribution: "유닛 데이터 출처:",
     footerDisclaimer: "Relic·SEGA와 무관한 팬 프로젝트입니다.",
     footerIcons: "아이콘: COH3 Stats (coh3stats.com / cdn.coh3stats.com).",
@@ -113,9 +112,8 @@ const ko: typeof en = {
   faction: {
     american: "미군",
     german: "독일군",
-    british: "영국군",
+    british_africa: "영국군",
     afrika_korps: "아프리카 군단",
-    british_africa: "영국군 (아프리카)",
   },
   category: {
     infantry: "보병",

@@ -15,12 +15,12 @@ const CDN_BASE = "https://data.coh3stats.com/cohstats/coh3-data";
 const INGEST_LOCALES = ["en", "ko"] as const;
 type IngestLocale = (typeof INGEST_LOCALES)[number];
 
+/** Multiplayer-playable races in coh3-data (matches coh3-stats unit browser). */
 const PLAYER_FACTIONS = [
   "american",
   "german",
-  "british",
-  "afrika_korps",
   "british_africa",
+  "afrika_korps",
 ] as const;
 
 const CATEGORIES = [

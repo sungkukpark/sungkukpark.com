@@ -27,6 +27,7 @@ Personal technical blog and analysis surface expanding into an **international C
 For benchmarking behavior and normalization logic—not vendored into this repo, **do not modify**:
 
 - Path: `D:\wkspaces\renderbrains\coh3-stats` (upstream [cohstats/coh3-stats](https://github.com/cohstats/coh3-stats), `yarn install` + `yarn dev` → localhost:3000).
+- **Hub factions:** ingest only MP races (`american`, `german`, `british_africa`, `afrika_korps`) — same set as coh3-stats unit browser; exclude data-only `british` bucket.
 - Data URLs: `config.getPatchDataUrl()` → `https://data.coh3stats.com/cohstats/coh3-data/{dataTag}/data/...` (see `config.ts` `patches` / `latestPatch`).
 - Unit pipeline entry: `src/unitStats/mappings.ts` → `getMappings()` (fetches locstring, then `mappingSbps.ts`, `mappingEbps.ts`, `mappingWeapon.ts`, etc.).
 - Closest UX reference for v1 list: `pages/explorer/unit-browser.tsx` + `components/unitStats/unitTable.tsx` (reuse **data shape**, not Mantine/CSS).
