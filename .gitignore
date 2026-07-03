@@ -1,0 +1,6 @@
+node_modules
+dist
+coh3/.generated
+coh3/public/data/**
+!coh3/public/data/.gitkeep
+.DS_Store

@@ -26,15 +26,20 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      # When you add Vite/Three.js: npm ci && npm run build → dist/
-      - name: Prepare distribution
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install and build site
         run: |
           set -euo pipefail
-          rm -rf dist
-          mkdir -p dist
-          cp index.html dist/
-          if [ -d public ]; then cp -r public/. dist/; fi
-          if [ -d assets ]; then cp -r assets dist/assets; fi
+          pnpm install --frozen-lockfile
+          pnpm build
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v6.2.1

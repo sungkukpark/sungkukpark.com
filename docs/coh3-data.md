@@ -1,0 +1,47 @@
+# COH3 game data (coh3-data)
+
+Unit specs come from the community [coh3-data](https://github.com/cohstats/coh3-data) CDN—not from scraping coh3stats.com.
+
+## Pinned patch
+
+Edit [`coh3/data-tag.json`](../coh3/data-tag.json):
+
+```json
+{ "dataTag": "v2.4.2-4" }
+```
+
+Tags must exist on [coh3-data releases/tags](https://github.com/cohstats/coh3-data/tags).
+
+## Ingest
+
+```bash
+pnpm coh3:ingest
+```
+
+Downloads (per tag):
+
+- `locstring.json`
+- `chunked/sbps/races/{american,german,...}.json`
+
+Writes:
+
+- `coh3/public/data/units.index.json`
+- `coh3/public/data/units/{faction}/{category}/{unitKey}.json`
+- `coh3/.generated/manifest.json` (checksums + warnings)
+
+## Full build (blog + COH3 app)
+
+```bash
+pnpm install
+pnpm build
+```
+
+Output: `dist/index.html`, `dist/coh3/` (Vite app + data).
+
+## Attribution
+
+Show [COH3 Stats Open Data](https://coh3stats.com/other/open-data) and the active `dataTag` in the UI (required).
+
+## Local reference (read-only)
+
+Compare values against a local [coh3-stats](https://github.com/cohstats/coh3-stats) checkout (`yarn dev`)—do not vendor that repo into this site.
