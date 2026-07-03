@@ -25,6 +25,8 @@ Downloads (per tag):
 
 The COH3 app UI is translated in code (`coh3/src/i18n/`). The user’s language choice is stored in `localStorage` under key `coh3-hub-locale` (`en` | `ko`).
 
+**Unit and faction icons** load at runtime from [COH3 Stats assets CDN](https://cdn.coh3stats.com) (`export/icons/…` and `icons/general/…`), using the same paths as [coh3-stats](https://github.com/cohstats/coh3-stats) `getIconsPathOnCDN` / `getFactionIcon`. Icon paths are extracted at ingest from `squad_ui_ext` (`icon_name`, `symbol_icon_name`).
+
 Writes:
 
 - `coh3/public/data/units.index.json`

@@ -1,5 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import { FactionEmblem, UnitPortrait } from "../components/GameImage";
 import { loadUnitsIndex } from "../data";
 import { useLocale } from "../i18n/LocaleContext";
 import { tCategory, tFaction } from "../i18n/messages";
@@ -54,11 +55,21 @@ export function UnitsListPage() {
     setSearchParams({ faction, category: c });
   };
 
+  const factionLabel = faction ? tFaction(locale, faction) : "";
+
   return (
-    <section>
-      <p className="badge">
-        {m.list.dataTag}: {index.dataTag}
-      </p>
+    <section className="panel">
+      <div className="panel-head">
+        <p className="badge">
+          {m.list.dataTag}: {index.dataTag}
+        </p>
+        {faction && (
+          <div className="faction-banner">
+            <FactionEmblem faction={faction} label={factionLabel} size="md" />
+            <span>{factionLabel}</span>
+          </div>
+        )}
+      </div>
 
       <h2>{m.list.faction}</h2>
       <div className="chip-row" role="toolbar" aria-label={m.list.faction}>
@@ -109,17 +120,29 @@ export function UnitsListPage() {
           {filtered.length === 0 ? (
             <p className="empty">{m.list.noUnits}</p>
           ) : (
-            <ul className="unit-list">
-              {filtered.map((u) => (
-                <li key={u.id}>
-                  <Link
-                    to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
-                  >
-                    {legacyDisplayName(u, locale)}
-                  </Link>
-                  <span className="mono">{u.unitKey}</span>
-                </li>
-              ))}
+            <ul className="unit-card-list">
+              {filtered.map((u) => {
+                const name = legacyDisplayName(u, locale);
+                return (
+                  <li key={u.id}>
+                    <Link
+                      className="unit-card"
+                      to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
+                    >
+                      <UnitPortrait
+                        iconName={u.iconName}
+                        symbolIconName={u.symbolIconName}
+                        alt=""
+                        size="sm"
+                      />
+                      <span className="unit-card-body">
+                        <span className="unit-card-title">{name}</span>
+                        <span className="mono">{u.unitKey}</span>
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </>

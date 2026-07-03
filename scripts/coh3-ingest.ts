@@ -42,6 +42,8 @@ export type UnitSummary = {
   category: Category;
   unitKey: string;
   displayNames: LocalizedString;
+  iconName?: string;
+  symbolIconName?: string;
   pbgid?: number;
 };
 
@@ -59,6 +61,8 @@ export type UnitDetail = {
   category: Category;
   unitKey: string;
   dataTag: string;
+  iconName?: string;
+  symbolIconName?: string;
   localized: Record<IngestLocale, UnitLocaleBundle>;
   raw: unknown;
 };
@@ -130,6 +134,28 @@ function formatValue(val: unknown, loc: LocstringMap, depth = 0): string {
     return parts.join(", ") || "[object]";
   }
   return String(val);
+}
+
+function extractUiIcons(unit: unknown): { iconName: string; symbolIconName: string } {
+  let iconName = "";
+  let symbolIconName = "";
+  const root = unit as { extensions?: Array<{ squadexts?: Record<string, unknown> }> };
+  if (!root.extensions) return { iconName, symbolIconName };
+
+  for (const ext of root.extensions) {
+    const sx = ext.squadexts;
+    if (!sx) continue;
+    const ref = sx.template_reference as { value?: string } | undefined;
+    if (!ref?.value?.includes("squad_ui_ext")) continue;
+    const raceList = sx.race_list as Array<{
+      race_data?: { info?: { icon_name?: string; symbol_icon_name?: string } };
+    }>;
+    const info = raceList?.[0]?.race_data?.info;
+    iconName = info?.icon_name?.trim() ?? "";
+    symbolIconName = info?.symbol_icon_name?.trim() ?? "";
+    break;
+  }
+  return { iconName, symbolIconName };
 }
 
 function extractDisplayName(unit: unknown, loc: LocstringMap, unitKey: string): string {
@@ -236,6 +262,7 @@ async function main() {
 
         const id = unitId(faction, category, unitKey);
         const pbgid = (raw as { pbgid?: number }).pbgid;
+        const { iconName, symbolIconName } = extractUiIcons(raw);
 
         summaries.push({
           id,
@@ -243,6 +270,8 @@ async function main() {
           category,
           unitKey,
           displayNames,
+          ...(iconName ? { iconName } : {}),
+          ...(symbolIconName ? { symbolIconName } : {}),
           ...(pbgid != null ? { pbgid } : {}),
         });
 
@@ -260,6 +289,8 @@ async function main() {
           category,
           unitKey,
           dataTag,
+          ...(iconName ? { iconName } : {}),
+          ...(symbolIconName ? { symbolIconName } : {}),
           localized,
           raw,
         };

@@ -12,6 +12,7 @@ const en = {
     lede: "Data-driven unit specs for strategy and analysis. Patch-pinned open data from COH3 Stats.",
     footerAttribution: "Unit data from",
     footerDisclaimer: "Not affiliated with Relic or SEGA.",
+    footerIcons: "Icons from COH3 Stats (coh3stats.com / cdn.coh3stats.com).",
   },
   hub: {
     dataTag: "Game data tag",
@@ -74,6 +75,7 @@ const ko: typeof en = {
     lede: "전략·분석용 유닛 스펙. COH3 Stats 오픈 데이터를 패치 단위로 고정해 표시합니다.",
     footerAttribution: "유닛 데이터 출처:",
     footerDisclaimer: "Relic·SEGA와 무관한 팬 프로젝트입니다.",
+    footerIcons: "아이콘: COH3 Stats (coh3stats.com / cdn.coh3stats.com).",
   },
   hub: {
     dataTag: "게임 데이터 태그",

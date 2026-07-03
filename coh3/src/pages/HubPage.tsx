@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FactionEmblem } from "../components/GameImage";
 import { loadUnitsIndex } from "../data";
 import { useLocale } from "../i18n/LocaleContext";
 import { tCategory, tFaction } from "../i18n/messages";
@@ -27,23 +28,29 @@ export function HubPage() {
   if (!index) return <p className="muted">{m.hub.loading}</p>;
 
   return (
-    <section>
-      <p className="badge">
-        {m.hub.dataTag}: {index.dataTag}
-      </p>
-      <p className="muted">{m.hub.unitsIndexed(index.units.length)}</p>
+    <section className="panel">
+      <div className="panel-head">
+        <p className="badge">
+          {m.hub.dataTag}: {index.dataTag}
+        </p>
+        <p className="muted">{m.hub.unitsIndexed(index.units.length)}</p>
+      </div>
       <h2>{m.hub.chooseFaction}</h2>
       <ul className="faction-grid">
         {index.factions.map((faction) => {
           const count = index.units.filter((u) => u.faction === faction).length;
+          const label = tFaction(locale, faction);
           return (
             <li key={faction}>
               <Link
                 className="faction-card"
                 to={`/units?faction=${encodeURIComponent(faction)}&category=infantry`}
               >
-                <strong>{tFaction(locale, faction)}</strong>
-                <span>{m.hub.unitsIndexed(count)}</span>
+                <FactionEmblem faction={faction} label={label} size="lg" />
+                <span className="faction-card-text">
+                  <strong>{label}</strong>
+                  <span className="muted">{m.hub.unitsIndexed(count)}</span>
+                </span>
               </Link>
             </li>
           );

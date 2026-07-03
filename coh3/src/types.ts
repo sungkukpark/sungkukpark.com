@@ -22,6 +22,8 @@ export type UnitSummary = {
   category: string;
   unitKey: string;
   displayNames: LocalizedString;
+  iconName?: string;
+  symbolIconName?: string;
   pbgid?: number;
 };
 
@@ -48,6 +50,8 @@ export type UnitDetail = {
   category: string;
   unitKey: string;
   dataTag: string;
+  iconName?: string;
+  symbolIconName?: string;
   localized: Record<Locale, UnitLocaleBundle>;
   raw: unknown;
 };

@@ -29,6 +29,7 @@ export function Layout() {
           </a>
           . {m.layout.footerDisclaimer}
         </p>
+        <p className="footer-meta">{m.layout.footerIcons}</p>
       </footer>
     </div>
   );

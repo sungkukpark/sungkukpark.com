@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FactionEmblem, UnitPortrait } from "../components/GameImage";
 import { loadUnitDetail } from "../data";
 import { useLocale } from "../i18n/LocaleContext";
 import { tCategory, tFaction } from "../i18n/messages";
@@ -38,21 +39,38 @@ export function UnitDetailPage() {
 
   const bundle = detail.localized[locale] ?? detail.localized.en;
   const displayName = bundle?.displayName ?? detail.unitKey;
+  const factionLabel = tFaction(locale, faction);
+  const categoryLabel = tCategory(locale, category);
 
   return (
-    <article className="unit-detail">
+    <article className="unit-detail panel">
       <p className="breadcrumb">
         <Link to="/">{m.detail.hub}</Link>
         {" · "}
         <Link to={`/units?faction=${faction}&category=${category}`}>
-          {tFaction(locale, faction)} / {tCategory(locale, category)}
+          {factionLabel} / {categoryLabel}
         </Link>
       </p>
-      <h2>{displayName}</h2>
-      <p className="mono">{detail.unitKey}</p>
-      <p className="badge">
-        {m.detail.dataTag}: {detail.dataTag}
-      </p>
+
+      <header className="unit-hero">
+        <UnitPortrait
+          iconName={detail.iconName}
+          symbolIconName={detail.symbolIconName}
+          alt={displayName}
+          size="lg"
+        />
+        <div className="unit-hero-text">
+          <div className="unit-hero-meta">
+            <FactionEmblem faction={faction} label={factionLabel} size="sm" />
+            <span className="badge">{categoryLabel}</span>
+          </div>
+          <h2>{displayName}</h2>
+          <p className="mono">{detail.unitKey}</p>
+          <p className="badge subtle">
+            {m.detail.dataTag}: {detail.dataTag}
+          </p>
+        </div>
+      </header>
 
       <label className="raw-toggle">
         <input
