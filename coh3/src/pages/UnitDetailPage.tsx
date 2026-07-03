@@ -1,9 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { loadUnitDetail } from "../data";
-import { CATEGORY_LABELS, FACTION_LABELS, type UnitDetail } from "../types";
+import { useLocale } from "../i18n/LocaleContext";
+import { tCategory, tFaction } from "../i18n/messages";
+import { type UnitDetail } from "../types";
 
 export function UnitDetailPage() {
+  const { locale, m } = useLocale();
   const { faction, category, unitKey } = useParams();
   const [detail, setDetail] = useState<UnitDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -19,32 +22,37 @@ export function UnitDetailPage() {
   }, [faction, category, unitKey]);
 
   if (!faction || !category || !unitKey) {
-    return <p className="error">Invalid unit URL.</p>;
+    return <p className="error">{m.detail.invalidUrl}</p>;
   }
 
   if (error) {
     return (
       <p className="error">
-        {error}.{" "}
-        <Link to={`/units?faction=${faction}&category=${category}`}>Back to list</Link>
+        {m.detail.loadError} ({error}).{" "}
+        <Link to={`/units?faction=${faction}&category=${category}`}>{m.detail.backToList}</Link>
       </p>
     );
   }
 
-  if (!detail) return <p className="muted">Loading unit…</p>;
+  if (!detail) return <p className="muted">{m.detail.loading}</p>;
+
+  const bundle = detail.localized[locale] ?? detail.localized.en;
+  const displayName = bundle?.displayName ?? detail.unitKey;
 
   return (
     <article className="unit-detail">
       <p className="breadcrumb">
-        <Link to="/">Hub</Link>
+        <Link to="/">{m.detail.hub}</Link>
         {" · "}
         <Link to={`/units?faction=${faction}&category=${category}`}>
-          {FACTION_LABELS[faction] ?? faction} / {CATEGORY_LABELS[category] ?? category}
+          {tFaction(locale, faction)} / {tCategory(locale, category)}
         </Link>
       </p>
-      <h2>{detail.displayName}</h2>
+      <h2>{displayName}</h2>
       <p className="mono">{detail.unitKey}</p>
-      <p className="badge">Data tag: {detail.dataTag}</p>
+      <p className="badge">
+        {m.detail.dataTag}: {detail.dataTag}
+      </p>
 
       <label className="raw-toggle">
         <input
@@ -52,20 +60,20 @@ export function UnitDetailPage() {
           checked={showRaw}
           onChange={(e) => setShowRaw(e.target.checked)}
         />
-        Show raw JSON
+        {m.detail.showRaw}
       </label>
 
       {showRaw ? (
         <pre className="raw-json">{JSON.stringify(detail.raw, null, 2)}</pre>
       ) : (
-        detail.sections.map((section) => (
+        bundle.sections.map((section) => (
           <section key={section.title} className="spec-section">
             <h3>{section.title}</h3>
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Field</th>
-                  <th scope="col">Value</th>
+                  <th scope="col">{m.detail.field}</th>
+                  <th scope="col">{m.detail.value}</th>
                 </tr>
               </thead>
               <tbody>
@@ -81,8 +89,8 @@ export function UnitDetailPage() {
         ))
       )}
 
-      {detail.sections.length === 0 && !showRaw && (
-        <p className="empty">No extension sections parsed. Use raw JSON.</p>
+      {!showRaw && bundle.sections.length === 0 && (
+        <p className="empty">{m.detail.noSections}</p>
       )}
     </article>
   );

@@ -20,8 +20,10 @@ pnpm coh3:ingest
 
 Downloads (per tag):
 
-- `locstring.json`
+- `locales/en-locstring.json`, `locales/ko-locstring.json` (unit names and in-game strings)
 - `chunked/sbps/races/{american,german,...}.json`
+
+The COH3 app UI is translated in code (`coh3/src/i18n/`). The user’s language choice is stored in `localStorage` under key `coh3-hub-locale` (`en` | `ko`).
 
 Writes:
 

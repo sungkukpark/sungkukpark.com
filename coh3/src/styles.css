@@ -32,6 +32,19 @@ a {
   font-size: 1.75rem;
 }
 
+.header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 0.35rem;
+}
+
 .eyebrow {
   margin: 0;
   font-size: 0.9rem;

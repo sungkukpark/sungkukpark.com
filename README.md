@@ -32,6 +32,8 @@ pnpm build             # ingest + Vite build → dist/
 
 Game data patch is pinned in [`coh3/data-tag.json`](coh3/data-tag.json). See [`docs/coh3-data.md`](docs/coh3-data.md) for CDN URLs and attribution.
 
+**Languages:** English (default) and Korean for UI and unit strings. Choice is saved in the browser (`localStorage` key `coh3-hub-locale`).
+
 ### COH3 data attribution
 
 Unit definitions come from [COH3 Stats Open Data](https://coh3stats.com/other/open-data) ([cohstats/coh3-data](https://github.com/cohstats/coh3-data)). This project is not affiliated with Relic or SEGA. A local [coh3-stats](https://github.com/cohstats/coh3-stats) clone is useful for spot-checking values only—do not fork its UI here.

@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { loadUnitsIndex } from "../data";
-import { CATEGORY_LABELS, FACTION_LABELS, type UnitsIndex } from "../types";
+import { useLocale } from "../i18n/LocaleContext";
+import { tCategory, tFaction } from "../i18n/messages";
+import { type UnitsIndex } from "../types";
 
 export function HubPage() {
+  const { locale, m } = useLocale();
   const [index, setIndex] = useState<UnitsIndex | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,16 +17,22 @@ export function HubPage() {
   }, []);
 
   if (error) {
-    return <p className="error">Could not load unit index. Run ingest and rebuild. ({error})</p>;
+    return (
+      <p className="error">
+        {m.hub.loadIndexError} ({error})
+      </p>
+    );
   }
 
-  if (!index) return <p className="muted">Loading data manifest…</p>;
+  if (!index) return <p className="muted">{m.hub.loading}</p>;
 
   return (
     <section>
-      <p className="badge">Game data tag: {index.dataTag}</p>
-      <p className="muted">{index.units.length} units indexed</p>
-      <h2>Choose a faction</h2>
+      <p className="badge">
+        {m.hub.dataTag}: {index.dataTag}
+      </p>
+      <p className="muted">{m.hub.unitsIndexed(index.units.length)}</p>
+      <h2>{m.hub.chooseFaction}</h2>
       <ul className="faction-grid">
         {index.factions.map((faction) => {
           const count = index.units.filter((u) => u.faction === faction).length;
@@ -33,18 +42,18 @@ export function HubPage() {
                 className="faction-card"
                 to={`/units?faction=${encodeURIComponent(faction)}&category=infantry`}
               >
-                <strong>{FACTION_LABELS[faction] ?? faction}</strong>
-                <span>{count} units</span>
+                <strong>{tFaction(locale, faction)}</strong>
+                <span>{m.hub.unitsIndexed(count)}</span>
               </Link>
             </li>
           );
         })}
       </ul>
-      <h2>Categories</h2>
-      <p className="muted">Pick a faction first, then refine by category on the list page.</p>
+      <h2>{m.hub.categoriesTitle}</h2>
+      <p className="muted">{m.hub.categoriesHint}</p>
       <ul className="tag-list">
         {index.categories.map((cat) => (
-          <li key={cat}>{CATEGORY_LABELS[cat] ?? cat}</li>
+          <li key={cat}>{tCategory(locale, cat)}</li>
         ))}
       </ul>
     </section>

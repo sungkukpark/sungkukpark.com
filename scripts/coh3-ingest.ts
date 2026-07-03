@@ -12,6 +12,9 @@ const OUT_GENERATED = path.join(ROOT, "coh3", ".generated");
 
 const CDN_BASE = "https://data.coh3stats.com/cohstats/coh3-data";
 
+const INGEST_LOCALES = ["en", "ko"] as const;
+type IngestLocale = (typeof INGEST_LOCALES)[number];
+
 const PLAYER_FACTIONS = [
   "american",
   "german",
@@ -31,32 +34,39 @@ const CATEGORIES = [
 type Faction = (typeof PLAYER_FACTIONS)[number];
 type Category = (typeof CATEGORIES)[number];
 
+type LocalizedString = { en: string; ko: string };
+
 export type UnitSummary = {
   id: string;
   faction: Faction;
   category: Category;
   unitKey: string;
-  displayName: string;
+  displayNames: LocalizedString;
   pbgid?: number;
 };
 
 export type SpecRow = { key: string; value: string };
 export type SpecSection = { title: string; rows: SpecRow[] };
 
+export type UnitLocaleBundle = {
+  displayName: string;
+  sections: SpecSection[];
+};
+
 export type UnitDetail = {
   id: string;
   faction: Faction;
   category: Category;
   unitKey: string;
-  displayName: string;
   dataTag: string;
-  sections: SpecSection[];
+  localized: Record<IngestLocale, UnitLocaleBundle>;
   raw: unknown;
 };
 
 type Manifest = {
   dataTag: string;
   ingestedAt: string;
+  locales: IngestLocale[];
   files: Record<string, { bytes: number; sha256: string }>;
   unitCount: number;
   warnings: string[];
@@ -164,6 +174,20 @@ function unitId(faction: Faction, category: Category, unitKey: string): string {
   return `${faction}/${category}/${unitKey}`;
 }
 
+async function loadLocaleMaps(
+  dataTag: string,
+  record: (name: string, bytes: number, sha256: string) => void,
+): Promise<Record<IngestLocale, LocstringMap>> {
+  const maps = {} as Record<IngestLocale, LocstringMap>;
+  for (const locale of INGEST_LOCALES) {
+    const file = `locales/${locale}-locstring.json`;
+    const { data, bytes, sha256 } = await fetchJson<LocstringMap>(cdnUrl(dataTag, file));
+    record(file, bytes, sha256);
+    maps[locale] = data;
+  }
+  return maps;
+}
+
 async function main() {
   const tagConfig = JSON.parse(await readFile(DATA_TAG_PATH, "utf8")) as { dataTag: string };
   const { dataTag } = tagConfig;
@@ -174,9 +198,7 @@ async function main() {
     manifestFiles[name] = { bytes, sha256 };
   };
 
-  const locRes = await fetchJson<LocstringMap>(cdnUrl(dataTag, "locstring.json"));
-  record("locstring.json", locRes.bytes, locRes.sha256);
-  const loc = locRes.data;
+  const locByLocale = await loadLocaleMaps(dataTag, record);
 
   const summaries: UnitSummary[] = [];
 
@@ -200,9 +222,16 @@ async function main() {
         const raw = bucket[unitKey];
         if (!raw || typeof raw !== "object") continue;
 
-        const displayName = extractDisplayName(raw, loc, unitKey);
-        if (displayName === unitKey) {
-          warnings.push(`missing displayName: ${faction}/${category}/${unitKey}`);
+        const displayNames: LocalizedString = {
+          en: extractDisplayName(raw, locByLocale.en, unitKey),
+          ko: extractDisplayName(raw, locByLocale.ko, unitKey),
+        };
+
+        if (displayNames.en === unitKey) {
+          warnings.push(`missing displayName (en): ${faction}/${category}/${unitKey}`);
+        }
+        if (displayNames.ko === unitKey) {
+          warnings.push(`missing displayName (ko): ${faction}/${category}/${unitKey}`);
         }
 
         const id = unitId(faction, category, unitKey);
@@ -213,18 +242,25 @@ async function main() {
           faction,
           category,
           unitKey,
-          displayName,
+          displayNames,
           ...(pbgid != null ? { pbgid } : {}),
         });
+
+        const localized = {} as Record<IngestLocale, UnitLocaleBundle>;
+        for (const locale of INGEST_LOCALES) {
+          localized[locale] = {
+            displayName: displayNames[locale],
+            sections: walkExtensions(raw, locByLocale[locale]),
+          };
+        }
 
         const detail: UnitDetail = {
           id,
           faction,
           category,
           unitKey,
-          displayName,
           dataTag,
-          sections: walkExtensions(raw, loc),
+          localized,
           raw,
         };
 
@@ -239,11 +275,12 @@ async function main() {
     }
   }
 
-  summaries.sort((a, b) => a.displayName.localeCompare(b.displayName));
+  summaries.sort((a, b) => a.displayNames.en.localeCompare(b.displayNames.en));
 
   const index = {
     dataTag,
     generatedAt: new Date().toISOString(),
+    locales: [...INGEST_LOCALES],
     factions: PLAYER_FACTIONS,
     categories: CATEGORIES,
     units: summaries,
@@ -254,6 +291,7 @@ async function main() {
   const manifest: Manifest = {
     dataTag,
     ingestedAt: new Date().toISOString(),
+    locales: [...INGEST_LOCALES],
     files: manifestFiles,
     unitCount: summaries.length,
     warnings,
@@ -265,7 +303,9 @@ async function main() {
     "utf8",
   );
 
-  console.log(`coh3 ingest: ${summaries.length} units, dataTag=${dataTag}`);
+  console.log(
+    `coh3 ingest: ${summaries.length} units, locales=${INGEST_LOCALES.join(",")}, dataTag=${dataTag}`,
+  );
   if (warnings.length) {
     console.warn(`warnings: ${warnings.length} (see coh3/.generated/manifest.json)`);
   }

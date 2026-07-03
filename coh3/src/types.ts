@@ -1,33 +1,34 @@
-export const FACTION_LABELS: Record<string, string> = {
-  american: "US Forces",
-  german: "Wehrmacht",
-  british: "British Forces",
-  afrika_korps: "Afrika Korps",
-  british_africa: "British (Africa)",
-};
-
-export const CATEGORY_LABELS: Record<string, string> = {
-  infantry: "Infantry",
-  vehicles: "Vehicles",
-  team_weapons: "Team weapons",
-  emplacements: "Emplacements",
-  aircraft: "Aircraft",
-};
+import type { Locale } from "./i18n/locale";
 
 export const OPEN_DATA_URL = "https://coh3stats.com/other/open-data";
+export type LocalizedString = { en: string; ko: string };
+
+export function pickLocalized(map: LocalizedString, locale: Locale): string {
+  return map[locale] || map.en;
+}
+
+/** @deprecated use pickLocalized on displayNames */
+export function legacyDisplayName(
+  unit: { displayName?: string; displayNames?: LocalizedString },
+  locale: Locale,
+): string {
+  if (unit.displayNames) return pickLocalized(unit.displayNames, locale);
+  return unit.displayName ?? "";
+}
 
 export type UnitSummary = {
   id: string;
   faction: string;
   category: string;
   unitKey: string;
-  displayName: string;
+  displayNames: LocalizedString;
   pbgid?: number;
 };
 
 export type UnitsIndex = {
   dataTag: string;
   generatedAt: string;
+  locales: Locale[];
   factions: string[];
   categories: string[];
   units: UnitSummary[];
@@ -36,13 +37,17 @@ export type UnitsIndex = {
 export type SpecRow = { key: string; value: string };
 export type SpecSection = { title: string; rows: SpecRow[] };
 
+export type UnitLocaleBundle = {
+  displayName: string;
+  sections: SpecSection[];
+};
+
 export type UnitDetail = {
   id: string;
   faction: string;
   category: string;
   unitKey: string;
-  displayName: string;
   dataTag: string;
-  sections: SpecSection[];
+  localized: Record<Locale, UnitLocaleBundle>;
   raw: unknown;
 };

@@ -1,28 +1,33 @@
 import { Link, Outlet } from "react-router-dom";
+import { useLocale } from "./i18n/LocaleContext";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { OPEN_DATA_URL } from "./types";
 
 export function Layout() {
+  const { m } = useLocale();
+
   return (
     <div className="layout">
       <header className="site-header">
-        <p className="eyebrow">
-          <Link to="/">COH3 analysis hub</Link>
-        </p>
-        <h1>Unit reference</h1>
-        <p className="lede">
-          Data-driven unit specs for strategy and analysis. Patch-pinned open data from COH3 Stats.
-        </p>
+        <div className="header-row">
+          <p className="eyebrow">
+            <Link to="/">{m.layout.hubLink}</Link>
+          </p>
+          <LanguageSwitcher />
+        </div>
+        <h1>{m.layout.title}</h1>
+        <p className="lede">{m.layout.lede}</p>
       </header>
       <main>
         <Outlet />
       </main>
       <footer className="site-footer">
         <p>
-          Unit data from{" "}
+          {m.layout.footerAttribution}{" "}
           <a href={OPEN_DATA_URL} rel="noopener noreferrer">
             COH3 Stats Open Data
           </a>
-          . Not affiliated with Relic or SEGA.
+          . {m.layout.footerDisclaimer}
         </p>
       </footer>
     </div>
