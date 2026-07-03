@@ -14,11 +14,19 @@ import {
 } from "../filters";
 import { loadUnitsIndex } from "../data";
 import { useLocale } from "../i18n/LocaleContext";
-import { STAT_KEYS, formatStatDisplay, maxStatInUnits, statValue, type StatKey } from "../stats";
+import { formatStatDisplay, maxStatInUnits, statValue, type StatKey } from "../stats";
 import { tCategory, tCoalition, tFaction, tStat } from "../i18n/messages";
 import { legacyDisplayName, type UnitSummary, type UnitsIndex } from "../types";
 
-const COMPARE_KEYS: StatKey[] = ["damage", "penetration", "range", "dps", "health", "costMp", "costPop"];
+const STAT_CONTROL_KEYS: StatKey[] = [
+  "damage",
+  "penetration",
+  "range",
+  "dps",
+  "health",
+  "costMp",
+  "costPop",
+];
 
 export function UnitsListPage() {
   const { locale, m } = useLocale();
@@ -27,7 +35,6 @@ export function UnitsListPage() {
   const category = normalizeCategoryParam(searchParams.get("category"));
   const [query, setQuery] = useState("");
   const [sortStat, setSortStat] = useState<StatKey>("damage");
-  const [compareStat, setCompareStat] = useState<StatKey>("damage");
   const [index, setIndex] = useState<UnitsIndex | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,7 +53,7 @@ export function UnitsListPage() {
 
   const maxByCompareKey = useMemo(() => {
     const out: Partial<Record<StatKey, number>> = {};
-    for (const key of COMPARE_KEYS) {
+    for (const key of STAT_CONTROL_KEYS) {
       out[key] = maxStatInUnits(categoryPool, key);
     }
     return out;
@@ -70,7 +77,7 @@ export function UnitsListPage() {
       });
   }, [categoryPool, query, locale, sortStat]);
 
-  const compareMax = maxByCompareKey[compareStat] ?? 1;
+  const compareMax = maxByCompareKey[sortStat] ?? 1;
 
   if (error) {
     return (
@@ -184,26 +191,14 @@ export function UnitsListPage() {
         <label className="stat-control">
           <span>{m.list.sortBy}</span>
           <select value={sortStat} onChange={(e) => setSortStat(e.target.value as StatKey)}>
-            {STAT_KEYS.map((k) => (
+            {STAT_CONTROL_KEYS.map((k) => (
               <option key={k} value={k}>
                 {tStat(locale, k)}
               </option>
             ))}
           </select>
         </label>
-        <label className="stat-control">
-          <span>{m.list.compareTitle}</span>
-          <select
-            value={compareStat}
-            onChange={(e) => setCompareStat(e.target.value as StatKey)}
-          >
-            {COMPARE_KEYS.map((k) => (
-              <option key={k} value={k}>
-                {tStat(locale, k)}
-              </option>
-            ))}
-          </select>
-        </label>
+        <p className="muted stat-control-hint">{m.list.sortByHint}</p>
       </div>
 
       <label className="search">
@@ -221,83 +216,42 @@ export function UnitsListPage() {
       {filtered.length === 0 ? (
         <p className="empty">{m.list.noUnits}</p>
       ) : (
-        <>
-          <section className="compare-panel" aria-label={m.list.compareTitle}>
-            <h3>{m.list.compareTitle}</h3>
-            <p className="muted compare-hint">
-              {tStat(locale, compareStat)} · max {Math.round(compareMax * 10) / 10}
-            </p>
-            <ul className="compare-list">
-              {filtered.slice(0, 24).map((u) => {
-                const name = legacyDisplayName(u, locale);
-                const val = u.combat ? statValue(u.combat, compareStat) : 0;
-                return (
-                  <li key={u.id} className="compare-row">
-                    <Link
-                      className="compare-row-link"
-                      to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
-                    >
-                      <UnitPortrait
-                        iconName={u.iconName}
-                        symbolIconName={u.symbolIconName}
-                        alt=""
+        <ul className="unit-card-list">
+          {filtered.map((u) => {
+            const name = legacyDisplayName(u, locale);
+            const val = u.combat ? statValue(u.combat, sortStat) : 0;
+            return (
+              <li key={u.id}>
+                <Link
+                  className="unit-card unit-card--with-stat"
+                  to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
+                >
+                  <UnitPortrait
+                    iconName={u.iconName}
+                    symbolIconName={u.symbolIconName}
+                    alt=""
+                    size="sm"
+                  />
+                  <span className="unit-card-body">
+                    <span className="unit-card-title">{name}</span>
+                    <span className="mono">{u.unitKey}</span>
+                    {u.combat && (
+                      <StatBar
                         size="sm"
+                        statKey={sortStat}
+                        label={tStat(locale, sortStat)}
+                        value={val}
+                        max={compareMax}
+                        format={(v) => formatStatDisplay(sortStat, v)}
+                        showShare={false}
                       />
-                      <span className="compare-row-name">{name}</span>
-                    </Link>
-                        <StatBar
-                          size="md"
-                          statKey={compareStat}
-                          value={val}
-                          max={compareMax}
-                          format={(v) => formatStatDisplay(compareStat, v)}
-                        />
-                  </li>
-                );
-              })}
-            </ul>
-            {filtered.length > 24 && (
-              <p className="muted">{m.list.compareMore(filtered.length - 24)}</p>
-            )}
-          </section>
-
-          <ul className="unit-card-list">
-            {filtered.map((u) => {
-              const name = legacyDisplayName(u, locale);
-              const val = u.combat ? statValue(u.combat, compareStat) : 0;
-              return (
-                <li key={u.id}>
-                  <Link
-                    className="unit-card unit-card--with-stat"
-                    to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
-                  >
-                    <UnitPortrait
-                      iconName={u.iconName}
-                      symbolIconName={u.symbolIconName}
-                      alt=""
-                      size="sm"
-                    />
-                    <span className="unit-card-body">
-                      <span className="unit-card-title">{name}</span>
-                      <span className="mono">{u.unitKey}</span>
-                      {u.combat && (
-                            <StatBar
-                              size="sm"
-                              statKey={compareStat}
-                              label={tStat(locale, compareStat)}
-                              value={val}
-                              max={compareMax}
-                              format={(v) => formatStatDisplay(compareStat, v)}
-                              showShare={false}
-                            />
-                      )}
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </>
+                    )}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </section>
   );

@@ -554,43 +554,11 @@ h2:first-child {
   color: inherit;
 }
 
-.compare-panel {
-  margin: 1.25rem 0;
-  padding: 1rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--panel) 92%, var(--accent) 8%);
-}
-
-.compare-panel h3 {
-  margin: 0 0 0.35rem;
-  font-size: 1rem;
-}
-
-.compare-hint {
-  margin: 0 0 0.75rem;
-  font-size: 0.85rem;
-}
-
-.compare-list {
-  list-style: none;
-  padding: 0;
+.stat-control-hint {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-.compare-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(200px, 1fr);
-  gap: 0.75rem 1rem;
-  align-items: center;
-  padding: 0.35rem 0;
-}
-
-.compare-row .stat-bar-wrap--md {
-  min-width: 0;
+  font-size: 0.82rem;
+  flex: 1 1 12rem;
+  align-self: center;
 }
 
 .stat-bar-wrap {
@@ -761,26 +729,6 @@ h2:first-child {
 .combat-stats-panel h3 {
   margin: 0 0 0.75rem;
   font-size: 1rem;
-}
-
-.compare-row-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 0;
-  text-decoration: none;
-  color: inherit;
-}
-
-.compare-row-link:hover .compare-row-name {
-  color: var(--accent);
-}
-
-.compare-row-name {
-  font-size: 0.9rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .unit-card--with-stat .stat-bar-wrap--sm {
