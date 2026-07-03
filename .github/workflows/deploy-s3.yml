@@ -1,0 +1,55 @@
+# Publish static site artifacts to S3 website hosting (eu-north-1).
+# Bucket website URL: http://sungkukpark.com.s3-website.eu-north-1.amazonaws.com
+#
+# AWS one-time setup (summary): enable static website hosting on the bucket,
+# public read policy for objects, IAM role for GitHub OIDC, repository secret
+# AWS_ROLE_ARN. See repository docs / issue tracker for full checklist.
+
+name: Deploy to S3
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: eu-north-1
+  S3_BUCKET: sungkukpark.com
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # When you add Vite/Three.js: npm ci && npm run build → dist/
+      - name: Prepare distribution
+        run: |
+          set -euo pipefail
+          rm -rf dist
+          mkdir -p dist
+          cp index.html dist/
+          if [ -d public ]; then cp -r public/. dist/; fi
+          if [ -d assets ]; then cp -r assets dist/assets; fi
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync dist to S3
+        run: |
+          set -euo pipefail
+          aws s3 sync dist/ "s3://${S3_BUCKET}/" \
+            --delete \
+            --cache-control "public, max-age=300" \
+            --exclude ".DS_Store"
+
+          aws s3 cp dist/index.html "s3://${S3_BUCKET}/index.html" \
+            --cache-control "public, max-age=60" \
+            --content-type "text/html; charset=utf-8"
