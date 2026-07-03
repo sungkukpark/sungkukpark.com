@@ -5,12 +5,20 @@ import { StatBar } from "../components/StatBar";
 import { MP_COALITIONS } from "../factions";
 import {
   CATEGORY_ALL,
-  FACTION_ALL,
-  isCoalitionFactionFilter,
+  coalitionFullySelected,
+  coalitionPartiallySelected,
+  isAllFactionsSelected,
+  isFactionSelected,
+  parseFactionsParam,
+  parseSortOrderParam,
+  serializeFactionsParam,
+  toggleCoalitionInSelection,
+  toggleFactionInSelection,
+  type FactionSelection,
+  type SortOrder,
   normalizeCategoryParam,
-  normalizeFactionParam,
   unitMatchesCategory,
-  unitMatchesFaction,
+  unitMatchesFactions,
 } from "../filters";
 import { loadUnitsIndex } from "../data";
 import { useLocale } from "../i18n/LocaleContext";
@@ -31,8 +39,9 @@ const STAT_CONTROL_KEYS: StatKey[] = [
 export function UnitsListPage() {
   const { locale, m } = useLocale();
   const [searchParams, setSearchParams] = useSearchParams();
-  const faction = normalizeFactionParam(searchParams.get("faction"));
+  const factionSelection = parseFactionsParam(searchParams.get("faction"));
   const category = normalizeCategoryParam(searchParams.get("category"));
+  const sortOrder = parseSortOrderParam(searchParams.get("order"));
   const [query, setQuery] = useState("");
   const [sortStat, setSortStat] = useState<StatKey>("damage");
   const [index, setIndex] = useState<UnitsIndex | null>(null);
@@ -44,12 +53,32 @@ export function UnitsListPage() {
       .catch((e) => setError(e instanceof Error ? e.message : "Load failed"));
   }, []);
 
+  const updateListParams = (patch: {
+    factions?: FactionSelection;
+    category?: string;
+    order?: SortOrder;
+  }) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      const factions = patch.factions !== undefined ? patch.factions : factionSelection;
+      const cat = patch.category ?? category;
+      const order = patch.order ?? sortOrder;
+      next.set("faction", serializeFactionsParam(factions));
+      next.set("category", cat);
+      if (order === "desc") next.delete("order");
+      else next.set("order", order);
+      return next;
+    });
+  };
+
   const categoryPool = useMemo(() => {
     if (!index) return [] as UnitSummary[];
     return index.units.filter(
-      (u) => unitMatchesFaction(u.faction, faction) && unitMatchesCategory(u.category, category),
+      (u) =>
+        unitMatchesFactions(u.faction, factionSelection) &&
+        unitMatchesCategory(u.category, category),
     );
-  }, [index, faction, category]);
+  }, [index, factionSelection, category]);
 
   const maxByCompareKey = useMemo(() => {
     const out: Partial<Record<StatKey, number>> = {};
@@ -72,10 +101,10 @@ export function UnitsListPage() {
       .sort((a, b) => {
         const av = a.combat ? statValue(a.combat, sortStat) : -1;
         const bv = b.combat ? statValue(b.combat, sortStat) : -1;
-        if (bv !== av) return bv - av;
+        if (bv !== av) return sortOrder === "desc" ? bv - av : av - bv;
         return legacyDisplayName(a, locale).localeCompare(legacyDisplayName(b, locale), locale);
       });
-  }, [categoryPool, query, locale, sortStat]);
+  }, [categoryPool, query, locale, sortStat, sortOrder]);
 
   const compareMax = maxByCompareKey[sortStat] ?? 1;
 
@@ -89,25 +118,20 @@ export function UnitsListPage() {
 
   if (!index) return <p className="muted">{m.list.loading}</p>;
 
-  const setFaction = (f: string) => {
-    setSearchParams({ faction: f, category });
-  };
-
   const setCategory = (c: string) => {
-    setSearchParams({ faction, category: c });
+    updateListParams({ category: c });
   };
 
-  const factionLabel = isCoalitionFactionFilter(faction)
-    ? tCoalition(locale, faction)
-    : faction === FACTION_ALL
-      ? m.list.allFactionsLabel
-      : tFaction(locale, faction);
+  const selectedFactionCount =
+    factionSelection === null ? MP_COALITIONS.flatMap((c) => c.factions).length : factionSelection.length;
 
-  const showFactionEmblem =
-    faction !== FACTION_ALL && !isCoalitionFactionFilter(faction);
+  const singleSelectedFaction =
+    factionSelection !== null && factionSelection.length === 1 ? factionSelection[0] : null;
 
-  const showFactionOnUnitCards =
-    faction === FACTION_ALL || isCoalitionFactionFilter(faction);
+  const showFactionOnUnitCards = selectedFactionCount > 1;
+
+  const emptyBecauseNoFactions =
+    factionSelection !== null && factionSelection.length === 0;
 
   return (
     <section className="panel">
@@ -115,12 +139,19 @@ export function UnitsListPage() {
         <p className="badge">
           {m.list.dataTag}: {index.dataTag}
         </p>
-        {faction !== FACTION_ALL && (
+        {singleSelectedFaction && (
           <div className="faction-banner">
-            {showFactionEmblem && (
-              <FactionEmblem faction={faction} label={factionLabel} size="md" />
-            )}
-            <span>{factionLabel}</span>
+            <FactionEmblem
+              faction={singleSelectedFaction}
+              label={tFaction(locale, singleSelectedFaction)}
+              size="md"
+            />
+            <span>{tFaction(locale, singleSelectedFaction)}</span>
+          </div>
+        )}
+        {!isAllFactionsSelected(factionSelection) && !singleSelectedFaction && selectedFactionCount > 0 && (
+          <div className="faction-banner faction-banner--multi">
+            <span>{m.list.factionSelectionCount(selectedFactionCount)}</span>
           </div>
         )}
       </div>
@@ -129,44 +160,61 @@ export function UnitsListPage() {
       <div className="chip-row chip-row--faction-all" role="group" aria-label={m.list.faction}>
         <button
           type="button"
-          className={faction === FACTION_ALL ? "chip active" : "chip"}
-          onClick={() => setFaction(FACTION_ALL)}
+          className={isAllFactionsSelected(factionSelection) ? "chip active" : "chip"}
+          aria-pressed={isAllFactionsSelected(factionSelection)}
+          onClick={() => updateListParams({ factions: null })}
         >
           {m.list.factionAll}
         </button>
       </div>
       <div className="faction-picker">
-        {MP_COALITIONS.map((coalition) => (
-          <div
-            key={coalition.id}
-            className={`coalition-chips coalition-chips--${coalition.id}`}
-          >
-            <button
-              type="button"
-              className={
-                faction === coalition.id
-                  ? "coalition-chip-label coalition-chip-label--select active"
-                  : "coalition-chip-label coalition-chip-label--select"
-              }
-              aria-pressed={faction === coalition.id}
-              onClick={() => setFaction(coalition.id)}
+        {MP_COALITIONS.map((coalition) => {
+          const coalitionOn = coalitionFullySelected(factionSelection, coalition.id);
+          const coalitionPartial = coalitionPartiallySelected(factionSelection, coalition.id);
+          return (
+            <div
+              key={coalition.id}
+              className={`coalition-chips coalition-chips--${coalition.id}`}
             >
-              {tCoalition(locale, coalition.id)}
-            </button>
-            <div className="chip-row" role="group" aria-label={tCoalition(locale, coalition.id)}>
-              {coalition.factions.map((f) => (
-                <button
-                  key={f}
-                  type="button"
-                  className={f === faction ? "chip active" : "chip"}
-                  onClick={() => setFaction(f)}
-                >
-                  {tFaction(locale, f)}
-                </button>
-              ))}
+              <button
+                type="button"
+                className={[
+                  "coalition-chip-label",
+                  "coalition-chip-label--select",
+                  coalitionOn ? "active" : "",
+                  coalitionPartial ? "partial" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                aria-pressed={coalitionOn}
+                onClick={() =>
+                  updateListParams({
+                    factions: toggleCoalitionInSelection(factionSelection, coalition.id),
+                  })
+                }
+              >
+                {tCoalition(locale, coalition.id)}
+              </button>
+              <div className="chip-row" role="group" aria-label={tCoalition(locale, coalition.id)}>
+                {coalition.factions.map((f) => (
+                  <button
+                    key={f}
+                    type="button"
+                    className={isFactionSelected(factionSelection, f) ? "chip active" : "chip"}
+                    aria-pressed={isFactionSelected(factionSelection, f)}
+                    onClick={() =>
+                      updateListParams({
+                        factions: toggleFactionInSelection(factionSelection, f),
+                      })
+                    }
+                  >
+                    {tFaction(locale, f)}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <h2>{m.list.category}</h2>
@@ -205,6 +253,16 @@ export function UnitsListPage() {
             ))}
           </select>
         </label>
+        <label className="stat-control">
+          <span>{m.list.sortOrder}</span>
+          <select
+            value={sortOrder}
+            onChange={(e) => updateListParams({ order: e.target.value as SortOrder })}
+          >
+            <option value="desc">{m.list.sortDesc}</option>
+            <option value="asc">{m.list.sortAsc}</option>
+          </select>
+        </label>
         <p className="muted stat-control-hint">{m.list.sortByHint}</p>
       </div>
 
@@ -220,7 +278,9 @@ export function UnitsListPage() {
 
       <p className="muted">{m.list.unitCount(filtered.length)}</p>
 
-      {filtered.length === 0 ? (
+      {emptyBecauseNoFactions ? (
+        <p className="empty">{m.list.noFactionsSelected}</p>
+      ) : filtered.length === 0 ? (
         <p className="empty">{m.list.noUnits}</p>
       ) : (
         <ul className="unit-card-list unit-card-list--compare">

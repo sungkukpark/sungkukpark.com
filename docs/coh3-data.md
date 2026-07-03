@@ -37,6 +37,7 @@ Writes:
 
 - **No duplicates:** one list per filter set; do not add a separate “compare top N” panel that repeats the same units and stats as the card list.
 - **One stat control** on the list page drives both sort order and bar charts (vs category max).
+- **Faction filter:** multi-select toggles; Allies/Axis turn both factions in that coalition on or off; URL `faction=american,german,afrika_korps` (legacy `allies` / single faction still work). Optional `order=asc` for ascending stat sort.
 - Cross-check combat numbers with `pnpm coh3:validate-stats` (requires sibling clone `../coh3-stats`).
 
 ## Full build (blog + COH3 app)
