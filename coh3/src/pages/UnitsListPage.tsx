@@ -220,7 +220,7 @@ export function UnitsListPage() {
       {filtered.length === 0 ? (
         <p className="empty">{m.list.noUnits}</p>
       ) : (
-        <ul className="unit-card-list">
+        <ul className="unit-card-list unit-card-list--compare">
           {filtered.map((u) => {
             const name = legacyDisplayName(u, locale);
             const val = u.combat ? statValue(u.combat, sortStat) : 0;
@@ -243,11 +243,10 @@ export function UnitsListPage() {
                       <StatBar
                         size="sm"
                         statKey={sortStat}
-                        label={tStat(locale, sortStat)}
                         value={val}
                         max={compareMax}
                         format={(v) => formatStatDisplay(sortStat, v)}
-                        showShare={false}
+                        showShare
                       />
                     )}
                   </span>

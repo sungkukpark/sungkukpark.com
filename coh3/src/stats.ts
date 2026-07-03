@@ -44,7 +44,7 @@ export function statBarMetrics(
   }
   const ratio = Math.min(1, value / max);
   const sharePct = Math.round(ratio * 100);
-  const fillPct = Math.max(10, sharePct);
+  const fillPct = sharePct;
   let tier: StatBarTier = "low";
   if (ratio >= 0.66) tier = "high";
   else if (ratio >= 0.33) tier = "mid";
