@@ -39,9 +39,8 @@ const en = {
     noUnits: "No units in this category.",
     loading: "Loading…",
     loadError: "Failed to load data.",
-    compareTitle: "Compare in this list",
-    sortBy: "Sort by",
-    compareMore: (n: number) => `+ ${n} more in list below`,
+    sortBy: "Stat",
+    sortByHint: "Sorts the list; bars show each value vs the category maximum.",
   },
   detail: {
     hub: "Hub",
@@ -124,9 +123,8 @@ const ko: typeof en = {
     noUnits: "이 카테고리에 유닛이 없습니다.",
     loading: "불러오는 중…",
     loadError: "데이터를 불러오지 못했습니다.",
-    compareTitle: "목록 내 비교",
-    sortBy: "정렬",
-    compareMore: (n: number) => `아래 목록에 ${n}개 더`,
+    sortBy: "스탯",
+    sortByHint: "목록 정렬 기준입니다. 막대는 카테고리 최대 대비 비율을 표시합니다.",
   },
   detail: {
     hub: "허브",

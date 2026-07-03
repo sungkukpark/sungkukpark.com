@@ -109,3 +109,13 @@ Avoid: vague subjects (`update stuff`, `changes`, `wip`), subject lines that are
 ## Agents and automation
 
 When an agent creates commits in this repo, it must follow this document—not Conventional Commits—and should ask before committing unless the user explicitly requested a commit.
+
+---
+
+## Product and UI principles
+
+| Principle | Meaning |
+|-----------|---------|
+| **No duplicates** | Do not show the same information twice on one screen (e.g. a “top N” chart and a full list with the same fields). One control, one list, one visualization per concern. |
+| **Minimal duplication** | If two UI elements would stay in sync (sort stat vs chart stat), merge them. Prefer extending an existing pattern over adding a parallel one. |
+| **COH3 app** | Unit list: one sorted card list with stat bars; unit detail: one combat stats block. Validate stats against the local `coh3-stats` clone (`pnpm coh3:validate-stats`), not a second in-app summary. |

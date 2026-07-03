@@ -33,6 +33,12 @@ Writes:
 - `coh3/public/data/units/{faction}/{category}/{unitKey}.json`
 - `coh3/.generated/manifest.json` (checksums + warnings)
 
+## UI conventions (`coh3/`)
+
+- **No duplicates:** one list per filter set; do not add a separate “compare top N” panel that repeats the same units and stats as the card list.
+- **One stat control** on the list page drives both sort order and bar charts (vs category max).
+- Cross-check combat numbers with `pnpm coh3:validate-stats` (requires sibling clone `../coh3-stats`).
+
 ## Full build (blog + COH3 app)
 
 ```bash
