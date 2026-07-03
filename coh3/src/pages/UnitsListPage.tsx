@@ -138,15 +138,19 @@ export function UnitsListPage() {
             key={coalition.id}
             className={`coalition-chips coalition-chips--${coalition.id}`}
           >
-            <span className="coalition-chip-label">{tCoalition(locale, coalition.id)}</span>
+            <button
+              type="button"
+              className={
+                faction === coalition.id
+                  ? "coalition-chip-label coalition-chip-label--select active"
+                  : "coalition-chip-label coalition-chip-label--select"
+              }
+              aria-pressed={faction === coalition.id}
+              onClick={() => setFaction(coalition.id)}
+            >
+              {tCoalition(locale, coalition.id)}
+            </button>
             <div className="chip-row" role="group" aria-label={tCoalition(locale, coalition.id)}>
-              <button
-                type="button"
-                className={faction === coalition.id ? "chip active" : "chip"}
-                onClick={() => setFaction(coalition.id)}
-              >
-                {tCoalition(locale, coalition.id)}
-              </button>
               {coalition.factions.map((f) => (
                 <button
                   key={f}

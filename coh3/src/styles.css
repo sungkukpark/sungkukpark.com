@@ -179,6 +179,32 @@ a {
   min-width: 4.5rem;
 }
 
+.coalition-chip-label--select {
+  margin: 0;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.coalition-chip-label--select:hover {
+  color: var(--accent);
+  border-color: var(--border);
+}
+
+.coalition-chip-label--select.active {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+}
+
 .faction-grid {
   list-style: none;
   padding: 0;
