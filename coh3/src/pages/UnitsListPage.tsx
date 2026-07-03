@@ -193,14 +193,30 @@ export function UnitsListPage() {
                   })
                 }
               >
-                {tCoalition(locale, coalition.id)}
+                <span className="coalition-chip-emblems" aria-hidden>
+                  {coalition.factions.map((f) => (
+                    <FactionEmblem
+                      key={f}
+                      faction={f}
+                      label={tFaction(locale, f)}
+                      size="xs"
+                    />
+                  ))}
+                </span>
+                <span className="coalition-chip-text">{tCoalition(locale, coalition.id)}</span>
               </button>
               <div className="chip-row" role="group" aria-label={tCoalition(locale, coalition.id)}>
-                {coalition.factions.map((f) => (
+                {coalition.factions.map((f) => {
+                  const label = tFaction(locale, f);
+                  return (
                   <button
                     key={f}
                     type="button"
-                    className={isFactionSelected(factionSelection, f) ? "chip active" : "chip"}
+                    className={
+                      isFactionSelected(factionSelection, f)
+                        ? "chip chip--with-emblem active"
+                        : "chip chip--with-emblem"
+                    }
                     aria-pressed={isFactionSelected(factionSelection, f)}
                     onClick={() =>
                       updateListParams({
@@ -208,9 +224,11 @@ export function UnitsListPage() {
                       })
                     }
                   >
-                    {tFaction(locale, f)}
+                    <FactionEmblem faction={f} label={label} size="xs" />
+                    <span>{label}</span>
                   </button>
-                ))}
+                  );
+                })}
               </div>
             </div>
           );

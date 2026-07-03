@@ -38,7 +38,7 @@ export function FactionEmblem({
 }: {
   faction: string;
   label: string;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
 }) {
   return (
     <GameImage
