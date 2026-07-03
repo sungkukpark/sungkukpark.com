@@ -3,13 +3,20 @@ import { useEffect, useMemo, useState } from "react";
 import { FactionEmblem, UnitPortrait } from "../components/GameImage";
 import { StatBar } from "../components/StatBar";
 import { MP_COALITIONS } from "../factions";
+import {
+  CATEGORY_ALL,
+  FACTION_ALL,
+  normalizeCategoryParam,
+  normalizeFactionParam,
+  unitMatchesCategory,
+  unitMatchesFaction,
+} from "../filters";
 import { loadUnitsIndex } from "../data";
 import { useLocale } from "../i18n/LocaleContext";
 import { STAT_KEYS, maxStatInUnits, statValue, type StatKey } from "../stats";
 import { tCategory, tCoalition, tFaction, tStat } from "../i18n/messages";
 import { legacyDisplayName, type UnitSummary, type UnitsIndex } from "../types";
 
-const FILTER_KEYS: StatKey[] = ["range", "penetration", "damage"];
 const COMPARE_KEYS: StatKey[] = ["damage", "penetration", "range", "dps", "health", "costMp", "costPop"];
 
 function parseMin(raw: string): number | null {
@@ -22,8 +29,8 @@ function parseMin(raw: string): number | null {
 export function UnitsListPage() {
   const { locale, m } = useLocale();
   const [searchParams, setSearchParams] = useSearchParams();
-  const faction = searchParams.get("faction") ?? "";
-  const category = searchParams.get("category") ?? "infantry";
+  const faction = normalizeFactionParam(searchParams.get("faction"));
+  const category = normalizeCategoryParam(searchParams.get("category"));
   const [query, setQuery] = useState("");
   const [sortStat, setSortStat] = useState<StatKey>("damage");
   const [compareStat, setCompareStat] = useState<StatKey>("damage");
@@ -40,8 +47,10 @@ export function UnitsListPage() {
   }, []);
 
   const categoryPool = useMemo(() => {
-    if (!index || !faction) return [] as UnitSummary[];
-    return index.units.filter((u) => u.faction === faction && u.category === category);
+    if (!index) return [] as UnitSummary[];
+    return index.units.filter(
+      (u) => unitMatchesFaction(u.faction, faction) && unitMatchesCategory(u.category, category),
+    );
   }, [index, faction, category]);
 
   const maxByCompareKey = useMemo(() => {
@@ -53,7 +62,6 @@ export function UnitsListPage() {
   }, [categoryPool]);
 
   const filtered = useMemo(() => {
-    if (!faction) return [] as UnitSummary[];
     const q = query.trim().toLowerCase();
     const minR = parseMin(minRange);
     const minP = parseMin(minPen);
@@ -79,7 +87,7 @@ export function UnitsListPage() {
         if (bv !== av) return bv - av;
         return legacyDisplayName(a, locale).localeCompare(legacyDisplayName(b, locale), locale);
       });
-  }, [categoryPool, faction, query, locale, minRange, minPen, minDamage, sortStat]);
+  }, [categoryPool, query, locale, minRange, minPen, minDamage, sortStat]);
 
   const compareMax = maxByCompareKey[compareStat] ?? 1;
 
@@ -98,11 +106,11 @@ export function UnitsListPage() {
   };
 
   const setCategory = (c: string) => {
-    if (!faction) return;
     setSearchParams({ faction, category: c });
   };
 
-  const factionLabel = faction ? tFaction(locale, faction) : "";
+  const factionLabel =
+    faction === FACTION_ALL ? m.list.allFactionsLabel : tFaction(locale, faction);
 
   return (
     <section className="panel">
@@ -110,7 +118,7 @@ export function UnitsListPage() {
         <p className="badge">
           {m.list.dataTag}: {index.dataTag}
         </p>
-        {faction && (
+        {faction !== FACTION_ALL && (
           <div className="faction-banner">
             <FactionEmblem faction={faction} label={factionLabel} size="md" />
             <span>{factionLabel}</span>
@@ -119,6 +127,15 @@ export function UnitsListPage() {
       </div>
 
       <h2>{m.list.faction}</h2>
+      <div className="chip-row chip-row--faction-all" role="group" aria-label={m.list.faction}>
+        <button
+          type="button"
+          className={faction === FACTION_ALL ? "chip active" : "chip"}
+          onClick={() => setFaction(FACTION_ALL)}
+        >
+          {m.list.factionAll}
+        </button>
+      </div>
       <div className="faction-picker">
         {MP_COALITIONS.map((coalition) => (
           <div
@@ -142,177 +159,180 @@ export function UnitsListPage() {
         ))}
       </div>
 
-      {!faction && <p className="empty">{m.list.selectFaction}</p>}
+      <h2>{m.list.category}</h2>
+      <div className="chip-row" role="tablist" aria-label={m.list.category}>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={category === CATEGORY_ALL}
+          className={category === CATEGORY_ALL ? "chip active" : "chip"}
+          onClick={() => setCategory(CATEGORY_ALL)}
+        >
+          {m.list.categoryAll}
+        </button>
+        {index.categories.map((c) => (
+          <button
+            key={c}
+            type="button"
+            role="tab"
+            aria-selected={c === category}
+            className={c === category ? "chip active" : "chip"}
+            onClick={() => setCategory(c)}
+          >
+            {tCategory(locale, c)}
+          </button>
+        ))}
+      </div>
 
-      {faction && (
-        <>
-          <h2>{m.list.category}</h2>
-          <div className="chip-row" role="tablist" aria-label={m.list.category}>
-            {index.categories.map((c) => (
-              <button
-                key={c}
-                type="button"
-                role="tab"
-                aria-selected={c === category}
-                className={c === category ? "chip active" : "chip"}
-                onClick={() => setCategory(c)}
-              >
-                {tCategory(locale, c)}
-              </button>
+      <div className="stat-controls">
+        <label className="stat-control">
+          <span>{m.list.sortBy}</span>
+          <select value={sortStat} onChange={(e) => setSortStat(e.target.value as StatKey)}>
+            {STAT_KEYS.map((k) => (
+              <option key={k} value={k}>
+                {tStat(locale, k)}
+              </option>
             ))}
-          </div>
+          </select>
+        </label>
+        <label className="stat-control">
+          <span>{m.list.compareTitle}</span>
+          <select
+            value={compareStat}
+            onChange={(e) => setCompareStat(e.target.value as StatKey)}
+          >
+            {COMPARE_KEYS.map((k) => (
+              <option key={k} value={k}>
+                {tStat(locale, k)}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
 
-          <div className="stat-controls">
-            <label className="stat-control">
-              <span>{m.list.sortBy}</span>
-              <select value={sortStat} onChange={(e) => setSortStat(e.target.value as StatKey)}>
-                {STAT_KEYS.map((k) => (
-                  <option key={k} value={k}>
-                    {tStat(locale, k)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="stat-control">
-              <span>{m.list.compareTitle}</span>
-              <select
-                value={compareStat}
-                onChange={(e) => setCompareStat(e.target.value as StatKey)}
-              >
-                {COMPARE_KEYS.map((k) => (
-                  <option key={k} value={k}>
-                    {tStat(locale, k)}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
+      <div className="stat-filters">
+        <label className="stat-filter">
+          <span>
+            {m.list.filterMin} {m.list.statRange}
+          </span>
+          <input
+            type="number"
+            min={0}
+            step="any"
+            placeholder="—"
+            value={minRange}
+            onChange={(e) => setMinRange(e.target.value)}
+          />
+        </label>
+        <label className="stat-filter">
+          <span>
+            {m.list.filterMin} {m.list.statPenetration}
+          </span>
+          <input
+            type="number"
+            min={0}
+            step="any"
+            placeholder="—"
+            value={minPen}
+            onChange={(e) => setMinPen(e.target.value)}
+          />
+        </label>
+        <label className="stat-filter">
+          <span>
+            {m.list.filterMin} {m.list.statDamage}
+          </span>
+          <input
+            type="number"
+            min={0}
+            step="any"
+            placeholder="—"
+            value={minDamage}
+            onChange={(e) => setMinDamage(e.target.value)}
+          />
+        </label>
+      </div>
 
-          <div className="stat-filters">
-            <label className="stat-filter">
-              <span>
-                {m.list.filterMin} {m.list.statRange}
-              </span>
-              <input
-                type="number"
-                min={0}
-                step="any"
-                placeholder="—"
-                value={minRange}
-                onChange={(e) => setMinRange(e.target.value)}
-              />
-            </label>
-            <label className="stat-filter">
-              <span>
-                {m.list.filterMin} {m.list.statPenetration}
-              </span>
-              <input
-                type="number"
-                min={0}
-                step="any"
-                placeholder="—"
-                value={minPen}
-                onChange={(e) => setMinPen(e.target.value)}
-              />
-            </label>
-            <label className="stat-filter">
-              <span>
-                {m.list.filterMin} {m.list.statDamage}
-              </span>
-              <input
-                type="number"
-                min={0}
-                step="any"
-                placeholder="—"
-                value={minDamage}
-                onChange={(e) => setMinDamage(e.target.value)}
-              />
-            </label>
-          </div>
+      <label className="search">
+        <span className="sr-only">{m.list.searchAria}</span>
+        <input
+          type="search"
+          placeholder={m.list.searchPlaceholder}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </label>
 
-          <label className="search">
-            <span className="sr-only">{m.list.searchAria}</span>
-            <input
-              type="search"
-              placeholder={m.list.searchPlaceholder}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </label>
+      <p className="muted">{m.list.unitCount(filtered.length)}</p>
 
-          <p className="muted">{m.list.unitCount(filtered.length)}</p>
+      {filtered.length === 0 ? (
+        <p className="empty">{m.list.noUnits}</p>
+      ) : (
+        <>
+          <section className="compare-panel" aria-label={m.list.compareTitle}>
+            <h3>{m.list.compareTitle}</h3>
+            <p className="muted compare-hint">
+              {tStat(locale, compareStat)} · max {Math.round(compareMax * 10) / 10}
+            </p>
+            <ul className="compare-list">
+              {filtered.slice(0, 24).map((u) => {
+                const name = legacyDisplayName(u, locale);
+                const val = u.combat ? statValue(u.combat, compareStat) : 0;
+                return (
+                  <li key={u.id} className="compare-row">
+                    <Link
+                      className="compare-row-link"
+                      to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
+                    >
+                      <UnitPortrait
+                        iconName={u.iconName}
+                        symbolIconName={u.symbolIconName}
+                        alt=""
+                        size="sm"
+                      />
+                      <span className="compare-row-name">{name}</span>
+                    </Link>
+                    <StatBar value={val} max={compareMax} />
+                  </li>
+                );
+              })}
+            </ul>
+            {filtered.length > 24 && (
+              <p className="muted">{m.list.compareMore(filtered.length - 24)}</p>
+            )}
+          </section>
 
-          {filtered.length === 0 ? (
-            <p className="empty">{m.list.noUnits}</p>
-          ) : (
-            <>
-              <section className="compare-panel" aria-label={m.list.compareTitle}>
-                <h3>{m.list.compareTitle}</h3>
-                <p className="muted compare-hint">
-                  {tStat(locale, compareStat)} · max {Math.round(compareMax * 10) / 10}
-                </p>
-                <ul className="compare-list">
-                  {filtered.slice(0, 24).map((u) => {
-                    const name = legacyDisplayName(u, locale);
-                    const val = u.combat ? statValue(u.combat, compareStat) : 0;
-                    return (
-                      <li key={u.id} className="compare-row">
-                        <Link
-                          className="compare-row-link"
-                          to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
-                        >
-                          <UnitPortrait
-                            iconName={u.iconName}
-                            symbolIconName={u.symbolIconName}
-                            alt=""
-                            size="sm"
-                          />
-                          <span className="compare-row-name">{name}</span>
-                        </Link>
-                        <StatBar value={val} max={compareMax} />
-                      </li>
-                    );
-                  })}
-                </ul>
-                {filtered.length > 24 && (
-                  <p className="muted">{m.list.compareMore(filtered.length - 24)}</p>
-                )}
-              </section>
-
-              <ul className="unit-card-list">
-                {filtered.map((u) => {
-                  const name = legacyDisplayName(u, locale);
-                  const val = u.combat ? statValue(u.combat, compareStat) : 0;
-                  return (
-                    <li key={u.id}>
-                      <Link
-                        className="unit-card unit-card--with-stat"
-                        to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
-                      >
-                        <UnitPortrait
-                          iconName={u.iconName}
-                          symbolIconName={u.symbolIconName}
-                          alt=""
-                          size="sm"
+          <ul className="unit-card-list">
+            {filtered.map((u) => {
+              const name = legacyDisplayName(u, locale);
+              const val = u.combat ? statValue(u.combat, compareStat) : 0;
+              return (
+                <li key={u.id}>
+                  <Link
+                    className="unit-card unit-card--with-stat"
+                    to={`/units/${u.faction}/${u.category}/${encodeURIComponent(u.unitKey)}`}
+                  >
+                    <UnitPortrait
+                      iconName={u.iconName}
+                      symbolIconName={u.symbolIconName}
+                      alt=""
+                      size="sm"
+                    />
+                    <span className="unit-card-body">
+                      <span className="unit-card-title">{name}</span>
+                      <span className="mono">{u.unitKey}</span>
+                      {u.combat && (
+                        <StatBar
+                          label={tStat(locale, compareStat)}
+                          value={val}
+                          max={compareMax}
                         />
-                        <span className="unit-card-body">
-                          <span className="unit-card-title">{name}</span>
-                          <span className="mono">{u.unitKey}</span>
-                          {u.combat && (
-                            <StatBar
-                              label={tStat(locale, compareStat)}
-                              value={val}
-                              max={compareMax}
-                            />
-                          )}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
-          )}
+                      )}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </>
       )}
     </section>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FactionEmblem } from "../components/GameImage";
 import { MP_COALITIONS } from "../factions";
+import { CATEGORY_ALL, FACTION_ALL } from "../filters";
 import { loadUnitsIndex } from "../data";
 import { useLocale } from "../i18n/LocaleContext";
 import { tCategory, tCoalition, tFaction } from "../i18n/messages";
@@ -35,6 +36,11 @@ export function HubPage() {
           {m.hub.dataTag}: {index.dataTag}
         </p>
         <p className="muted">{m.hub.unitsIndexed(index.units.length)}</p>
+        <p>
+          <Link className="text-link" to={`/units?faction=${FACTION_ALL}&category=${CATEGORY_ALL}`}>
+            {m.hub.browseAllUnits}
+          </Link>
+        </p>
       </div>
       <h2>{m.hub.chooseFaction}</h2>
 

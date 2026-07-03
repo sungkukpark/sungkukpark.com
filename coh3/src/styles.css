@@ -229,6 +229,20 @@ a {
   margin-bottom: 1rem;
 }
 
+.chip-row--faction-all {
+  margin-bottom: 0.35rem;
+}
+
+.text-link {
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
 .chip {
   border: 1px solid var(--border);
   background: var(--bg);
